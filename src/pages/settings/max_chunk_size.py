@@ -8,6 +8,11 @@ from src.settings import save_settings, settings
 __all__ = ['main']
 
 
+_TEXT = """请输入要设置的大小, 单位为字节
+不建议设置的过小, 会导致写入速度过慢
+"""
+
+
 class _MaxChunkSizeValidator(Validator):
     def validate(self, document: Document) -> None:
         if not document.text:
@@ -19,7 +24,7 @@ class _MaxChunkSizeValidator(Validator):
 def main():
     _max_chunk_size = input_dialog(
         PROMPT_TOOLKIT_DIALOG_TITLE,
-        """请输入要设置的大小, 单位为字节""",
+        _TEXT,
         '确认',
         '返回',
         validator=_MaxChunkSizeValidator(),

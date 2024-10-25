@@ -1,4 +1,9 @@
-from prompt_toolkit.shortcuts import input_dialog, message_dialog, radiolist_dialog, yes_no_dialog
+from prompt_toolkit.shortcuts import (
+    input_dialog,
+    message_dialog,
+    radiolist_dialog,
+    yes_no_dialog,
+)
 from steam.enums import EResult
 from steam.webauth import WebAuth
 
@@ -40,7 +45,11 @@ def _add():
             message_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, '用户已存在', '继续').run()
             continue
         password = input_dialog(
-            PROMPT_TOOLKIT_DIALOG_TITLE, '请输入用户的密码', '确认', '返回', password=True
+            PROMPT_TOOLKIT_DIALOG_TITLE,
+            '请输入用户的密码',
+            '确认',
+            '返回',
+            password=True,
         ).run()
         if not password:
             return
@@ -60,7 +69,10 @@ def _add():
         save_settings()
 
         if not client.logged_on:
-            if client.login(user_name, access_token=webauth.refresh_token) != EResult.OK:
+            if (
+                client.login(user_name, access_token=webauth.refresh_token)
+                != EResult.OK
+            ):
                 client.logout()
         message_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, '添加成功', '确认').run()
         return
@@ -79,7 +91,9 @@ def _remove():
     if not user_name:
         return
 
-    if yes_no_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, '真的要移除吗?', '确认', '取消').run():
+    if yes_no_dialog(
+        PROMPT_TOOLKIT_DIALOG_TITLE, '真的要移除吗?', '确认', '取消'
+    ).run():
         del settings['users'][user_name]
         save_settings()
         if client.username == user_name:

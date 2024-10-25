@@ -4,7 +4,7 @@ def ssl():
     import urllib3
     from requests.sessions import Session
 
-    from src.settings import settings
+    from .settings import settings
 
     origin = Session.__init__
 
@@ -12,7 +12,9 @@ def ssl():
         origin(self)
         self.verify = settings.get('ssl') or True
 
-    warnings.filterwarnings('ignore', category=urllib3.exceptions.InsecureRequestWarning)
+    warnings.filterwarnings(
+        'ignore', category=urllib3.exceptions.InsecureRequestWarning
+    )
 
     Session.__init__ = patched
 

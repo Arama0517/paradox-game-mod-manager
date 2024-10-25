@@ -10,10 +10,10 @@ from prompt_toolkit.shortcuts import input_dialog, message_dialog, radiolist_dia
 from steam.webapi import DEFAULT_PARAMS
 from steam.webauth import WebAuth, WebAuthException
 
-from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
-from src.pages.settings.certificate import CertificatePathValidator
-from src.path import DATA_DIR_PATH, MOD_BOOT_FILES_PATH, MODS_DIR_PATH
-from src.settings import save_settings, settings
+from .dialog import PROMPT_TOOLKIT_DIALOG_TITLE
+from .pages.settings.certificate import CertificatePathValidator
+from .path import DATA_DIR_PATH, MOD_BOOT_FILES_PATH, MODS_DIR_PATH
+from .settings import save_settings, settings
 
 DEFAULT_USERS = {
     'thb112259': 'steamok7416',
@@ -100,8 +100,7 @@ def main():
     def except_hook(exc_type, exc_value, exc_traceback):
         message_dialog(
             PROMPT_TOOLKIT_DIALOG_TITLE,
-            f"""发生了一个错误:
-{''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))}""",
+            f"发生了一个错误: \n{''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))}",  # noqa: E501
             '退出',
         ).run()
 
@@ -122,8 +121,8 @@ def main():
     MODS_DIR_PATH.mkdir(parents=True, exist_ok=True)
     MOD_BOOT_FILES_PATH.mkdir(parents=True, exist_ok=True)
 
-    from src import pages
-    from src.steam_clients import client
+    from . import pages
+    from .steam_clients import client
 
     while True:
         text = '请选择一个选项'
@@ -140,7 +139,9 @@ def main():
             ]
         options += [('settings', '设置')]
 
-        match radiolist_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, text, '确定', '退出', options).run():
+        match radiolist_dialog(
+            PROMPT_TOOLKIT_DIALOG_TITLE, text, '确定', '退出', options
+        ).run():
             case 'start':
                 pages.start()
                 break

@@ -1,7 +1,8 @@
 from prompt_toolkit.shortcuts import radiolist_dialog
 
 from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
-from src.pages.settings import certificate, download_max_threads, max_chunk_size, users
+
+from . import certificate, download_max_threads, max_chunk_size, users
 
 __all__ = ['main']
 

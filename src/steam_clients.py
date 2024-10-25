@@ -4,7 +4,7 @@ from steam.client.cdn import CDNClient
 from steam.enums import EResult
 from steam.webauth import WebAuth
 
-from src.settings import save_settings, settings
+from .settings import save_settings, settings
 
 __all__ = ['client', 'cdn_client']
 

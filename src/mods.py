@@ -1,7 +1,6 @@
 import asyncio
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Iterator
 
 import aiofiles
 from rich.console import RenderableType
@@ -11,7 +10,6 @@ from rich.progress import (
     ProgressColumn,
     SpinnerColumn,
     Task,
-    TaskID,
     TaskProgressColumn,
     TextColumn,
     TimeRemainingColumn,
@@ -19,9 +17,9 @@ from rich.progress import (
 from rich.text import Text
 from steam.client.cdn import CDNDepotFile, CDNDepotManifest
 
-from src.path import MODS_DIR_PATH
-from src.settings import settings
-from src.steam_clients import cdn_client
+from .path import MODS_DIR_PATH
+from .settings import settings
+from .steam_clients import cdn_client
 
 __all__ = ['download']
 
@@ -36,54 +34,6 @@ def _format_size(size: int | float):
         unit_index += 1
 
     return f'{size:.2f} {units[unit_index]}'
-
-
-async def _write_mod_files(
-    cdn_files: Iterator[CDNDepotFile],
-    download_path: Path,
-    progress: Progress,
-    task_id: TaskID,
-):
-    loop = asyncio.get_event_loop()
-    for cdn_file in cdn_files:
-        file_path: Path = download_path / cdn_file.filename
-        file_path.parent.mkdir(parents=True, exist_ok=True)
-
-        async with aiofiles.open(file_path, 'wb') as f:
-            while True:
-                data: bytes = await loop.run_in_executor(
-                    None, cdn_file.read, settings['max_chunk_size']
-                )
-                if not data:
-                    break
-                await f.write(data)
-                progress.advance(task_id, len(data))
-                del data
-        del cdn_file
-
-
-def _sort_cdn_depot_files(
-    manifest: CDNDepotManifest,
-) -> tuple[Iterator[Iterator[CDNDepotFile]], int]:
-    files = [target for target in manifest.iter_files() if not target.is_directory]
-
-    max_chunks = min(len(files), settings['download_max_threads'])
-    chunks = [[] for _ in range(max_chunks)]
-    chunk_sizes = [0] * max_chunks
-
-    min_chunk_index = 0
-
-    for file in sorted(files, key=lambda f: f.size, reverse=True):
-        chunks[min_chunk_index].append(file)
-        chunk_sizes[min_chunk_index] += file.size
-
-        min_size = chunk_sizes[min_chunk_index]
-        for i in range(max_chunks):
-            if chunk_sizes[i] < min_size:
-                min_chunk_index = i
-                min_size = chunk_sizes[i]
-
-    return (iter(chunk) for chunk in chunks), sum(chunk_sizes)
 
 
 class DownloadSpeedColumn(ProgressColumn):
@@ -118,9 +68,20 @@ class DownloadSpeedColumn(ProgressColumn):
 
 
 async def _download(item_id: str) -> timedelta:
-    manifest = cdn_client.get_manifest_for_workshop_item(int(item_id))
+    manifest: CDNDepotManifest | Exception = cdn_client.get_manifest_for_workshop_item(
+        int(item_id)
+    )
     if isinstance(manifest, Exception):
         raise manifest
+
+    files_size = 0
+    queue: asyncio.Queue[CDNDepotFile] = asyncio.Queue()
+    for cdn_file in manifest.iter_files():
+        cdn_file: CDNDepotFile
+        if cdn_file.is_directory:
+            continue
+        await queue.put(cdn_file)
+        files_size += cdn_file.size
 
     start_time = datetime.now()
     with Progress(
@@ -131,12 +92,28 @@ async def _download(item_id: str) -> timedelta:
         DownloadSpeedColumn(),
         TimeRemainingColumn(),
     ) as progress:
-        chunks, files_size = _sort_cdn_depot_files(manifest)
         task_id = progress.add_task('[bold dim]正在下载模组中...', total=files_size)
 
-        tasks = [
-            _write_mod_files(chunk, MODS_DIR_PATH / item_id, progress, task_id) for chunk in chunks
-        ]
+        async def download_worker():
+            while not queue.empty():
+                cdn_file = await queue.get()
+                file_path: Path = MODS_DIR_PATH / item_id / cdn_file.filename
+                file_path.parent.mkdir(parents=True, exist_ok=True)
+
+                async with aiofiles.open(file_path, 'wb') as f:
+                    loop = asyncio.get_event_loop()
+                    while True:
+                        data: bytes = await loop.run_in_executor(
+                            None, cdn_file.read, settings['max_chunk_size']
+                        )
+                        if not data:
+                            break
+                        await f.write(data)
+                        progress.advance(task_id, len(data))
+                queue.task_done()
+
+        tasks = [download_worker() for _ in range(settings['download_max_threads'])]
+
         await asyncio.gather(*tasks)
     return datetime.now() - start_time
 

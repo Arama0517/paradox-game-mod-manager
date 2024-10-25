@@ -13,7 +13,9 @@ __all__ = ['main']
 def main():
     items_id = list(settings['mods'].keys())
     if len(items_id) == 0:
-        message_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, '你还没有安装任何模组', '返回').run()
+        message_dialog(
+            PROMPT_TOOLKIT_DIALOG_TITLE, '你还没有安装任何模组', '返回'
+        ).run()
         return
     items_info = webapi.post(
         'ISteamRemoteStorage',
@@ -42,6 +44,8 @@ def main():
             logger.info(f'{item_info['title']} 已经是最新版本')
     message_dialog(
         PROMPT_TOOLKIT_DIALOG_TITLE,
-        f'更新完成, 共计用时: {mod_update_durations:.2f}秒' if changed else '没有需要更新的模组',
+        f'更新完成, 共计用时: {mod_update_durations:.2f}秒'
+        if changed
+        else '没有需要更新的模组',
         '返回',
     ).run()

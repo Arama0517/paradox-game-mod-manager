@@ -46,7 +46,9 @@ def main() -> None:
         if item_id is None:
             break
         if item_id in settings['mods']:
-            message_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, '该Mod已经安装过了', '继续').run()
+            message_dialog(
+                PROMPT_TOOLKIT_DIALOG_TITLE, '该Mod已经安装过了', '继续'
+            ).run()
             continue
 
         item_info = webapi.post(

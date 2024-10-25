@@ -1,6 +1,6 @@
 import json
 
-from src.path import LAUNCHER_SETTINGS_FILE_PATH
+from .path import LAUNCHER_SETTINGS_FILE_PATH
 
 __all__ = ['settings', 'save_settings']
 

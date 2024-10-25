@@ -14,7 +14,9 @@ def main():
     for item_id, item_info in settings['mods'].items():
         options.append((item_id, item_info['title']))
     if not options:
-        message_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, '你还没有安装任何模组', '返回').run()
+        message_dialog(
+            PROMPT_TOOLKIT_DIALOG_TITLE, '你还没有安装任何模组', '返回'
+        ).run()
         return
 
     items_id = checkboxlist_dialog(
