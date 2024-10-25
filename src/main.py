@@ -1,13 +1,14 @@
 import atexit
 import os
 import sys
-import traceback
 from pathlib import Path
 
 import requests
 from loguru import logger
-from prompt_toolkit.shortcuts import input_dialog, message_dialog, radiolist_dialog
-from steam import webapi
+from prompt_toolkit.shortcuts import input_dialog, radiolist_dialog
+from rich import print
+from rich.traceback import Traceback
+from steam.webapi import DEFAULT_PARAMS
 from steam.webauth import WebAuth, WebAuthException
 
 from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
@@ -24,39 +25,37 @@ DEFAULT_USERS = {
 def init_ssl():
     while True:
         try:
-            webapi.get('ISteamWebAPIUtil', 'GetServerInfo')
+            requests.get(
+                f'{'https' if DEFAULT_PARAMS['https'] else 'http'}://{DEFAULT_PARAMS['apihost']}'
+            )
             break
         except requests.exceptions.SSLError:
-            text = 'SSL错误'
-        except OSError:
-            text = '证书不存在'
-        text += '\n请选择一个选项'
-        ssl = radiolist_dialog(
-            PROMPT_TOOLKIT_DIALOG_TITLE,
-            text,
-            '确认',
-            '退出',
-            [
-                ('retry', '重试'),
-                ('disable_ssl', '关闭证书认证'),
-                ('set_local_certificate', '设置本地证书路径'),
-            ],
-        ).run()
-        match ssl:
-            case None:
-                sys.exit(1)
-            case 'retry':
-                continue
-            case 'disable_ssl':
-                settings['ssl'] = False
-            case 'set_local_certificate':
-                certificate_path = input_dialog(
-                    PROMPT_TOOLKIT_DIALOG_TITLE,
-                    '请输入证书路径',
-                    validator=CertificatePathValidator(),
-                ).run()
-                settings['ssl'] = certificate_path
-        save_settings()
+            ssl = radiolist_dialog(
+                PROMPT_TOOLKIT_DIALOG_TITLE,
+                'SSL错误\n请选择一个选项',
+                '确认',
+                '退出',
+                [
+                    ('retry', '重试'),
+                    ('disable_ssl', '关闭证书认证'),
+                    ('set_local_certificate', '设置本地证书路径'),
+                ],
+            ).run()
+            match ssl:
+                case None:
+                    sys.exit(1)
+                case 'retry':
+                    continue
+                case 'disable_ssl':
+                    settings['ssl'] = False
+                case 'set_local_certificate':
+                    certificate_path = input_dialog(
+                        PROMPT_TOOLKIT_DIALOG_TITLE,
+                        '请输入证书路径',
+                        validator=CertificatePathValidator(),
+                    ).run()
+                    settings['ssl'] = certificate_path
+            save_settings()
 
 
 def init_settings():
@@ -100,12 +99,13 @@ def init_settings():
 
 def main():
     def except_hook(exc_type, exc_value, exc_traceback):
-        message_dialog(
-            PROMPT_TOOLKIT_DIALOG_TITLE,
-            f"""发生了一个错误:
-{''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))}""",
-            '退出',
-        ).run()
+        #         message_dialog(
+        #             PROMPT_TOOLKIT_DIALOG_TITLE,
+        #             f"""发生了一个错误:
+        # {''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))}""",
+        #             '退出',
+        #         ).run()
+        print(Traceback.from_exception(exc_type, exc_value, exc_traceback))
 
     sys.excepthook = except_hook
 

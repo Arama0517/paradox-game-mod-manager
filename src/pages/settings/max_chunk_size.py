@@ -5,7 +5,7 @@ from prompt_toolkit.validation import ValidationError, Validator
 from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
 from src.settings import save_settings, settings
 
-__all__ = ['max_chunk_size']
+__all__ = ['main']
 
 
 class _MaxChunkSizeValidator(Validator):
@@ -16,11 +16,10 @@ class _MaxChunkSizeValidator(Validator):
             raise ValidationError(message='请输入一个有效的数字')
 
 
-def max_chunk_size():
+def main():
     _max_chunk_size = input_dialog(
         PROMPT_TOOLKIT_DIALOG_TITLE,
-        """请输入要设置的大小, 单位为字节
-不会对下载小文件(<1M)有任何帮助, 并且会导致下载大文件时占用内存大""",
+        """请输入要设置的大小, 单位为字节""",
         '确认',
         '返回',
         validator=_MaxChunkSizeValidator(),

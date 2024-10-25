@@ -9,7 +9,7 @@ from steam import webapi
 from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
 from src.settings import save_settings, settings
 
-__all__ = ['certificate', 'CertificatePathValidator']
+__all__ = ['main', 'CertificatePathValidator']
 
 
 class CertificatePathValidator(Validator):
@@ -29,7 +29,7 @@ class CertificatePathValidator(Validator):
             raise ValidationError(message=str(e))
 
 
-def certificate():
+def main():
     default: str
     match settings['ssl']:
         case True:

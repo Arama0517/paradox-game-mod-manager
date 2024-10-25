@@ -16,14 +16,14 @@ dependencies = [
 [tool.uv]
 dev-dependencies = [
     "lib-not-dr[nuitka]>=0.4.0",
-    "nuitka>=2.4.10",
+    "nuitka>=2.4.11",
     "pytest>=8.3.3",
     "ruff>=0.6.9",
     "tomli>=2.0.2",
 ]
 
 [tool.uv.sources]
-steam = { git = "https://github.com/detiam/steam_websocket.git", rev = "solsticegamestudios_fork" }
+steam = { git = "https://github.com/solsticegamestudios/steam" }
 
 [tool.ruff]
 line-length = 100

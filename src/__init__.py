@@ -1,21 +1,12 @@
-import warnings
+def ssl():
+    import warnings
 
-import urllib3
-
-
-def init():
-    import requests
-    from loguru import logger
-    from rich.logging import RichHandler
+    import urllib3
+    from requests.sessions import Session
 
     from src.settings import settings
 
-    # 设置 logger
-    logger.remove()
-    logger.add(RichHandler())
-
-    # 适配用反代加速Steam的工具
-    origin = requests.Session.__init__
+    origin = Session.__init__
 
     def patched(self):
         origin(self)
@@ -23,7 +14,19 @@ def init():
 
     warnings.filterwarnings('ignore', category=urllib3.exceptions.InsecureRequestWarning)
 
-    requests.Session.__init__ = patched
+    Session.__init__ = patched
+
+
+def init():
+    from loguru import logger
+    from rich.logging import RichHandler
+
+    # 设置 logger
+    logger.remove()
+    logger.add(RichHandler())
+
+    # 适配用反代加速Steam的工具
+    ssl()
 
 
 init()

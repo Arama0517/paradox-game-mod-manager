@@ -5,7 +5,7 @@ from prompt_toolkit.validation import ValidationError, Validator
 from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
 from src.settings import save_settings, settings
 
-__all__ = ['download_max_threads']
+__all__ = ['main']
 
 
 class _DownloadThreadsValidator(Validator):
@@ -16,7 +16,7 @@ class _DownloadThreadsValidator(Validator):
             raise ValidationError(message='请输入一个有效的数字')
 
 
-def download_max_threads():
+def main():
     _download_max_threads = input_dialog(
         PROMPT_TOOLKIT_DIALOG_TITLE,
         '请输入要设置的线程数\n不建议设置的过高, 可能会导致占用内存过大',

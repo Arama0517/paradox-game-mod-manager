@@ -6,10 +6,10 @@ from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
 from src.settings import save_settings, settings
 from src.steam_clients import client
 
-__all__ = ['users']
+__all__ = ['main']
 
 
-def users():
+def main():
     while True:
         match radiolist_dialog(
             PROMPT_TOOLKIT_DIALOG_TITLE,
