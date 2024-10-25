@@ -4,7 +4,7 @@ def ssl():
     import urllib3
     from requests.sessions import Session
 
-    from .settings import settings
+    from src.settings import settings
 
     origin = Session.__init__
 

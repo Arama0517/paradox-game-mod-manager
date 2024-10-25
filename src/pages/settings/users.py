@@ -11,8 +11,6 @@ from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
 from src.settings import save_settings, settings
 from src.steam_clients import client
 
-__all__ = ['main']
-
 
 def main():
     while True:
@@ -27,14 +25,14 @@ def main():
             ],
         ).run():
             case 'add':
-                _add()
+                add()
             case 'remove':
-                _remove()
+                remove()
             case _:
                 return
 
 
-def _add():
+def add():
     while True:
         user_name = input_dialog(
             PROMPT_TOOLKIT_DIALOG_TITLE, '请输入用户的名字', '确认', '返回'
@@ -78,7 +76,7 @@ def _add():
         return
 
 
-def _remove():
+def remove():
     options = []
     for user_name in settings['users'].keys():
         options += [(user_name, user_name)]
@@ -99,3 +97,6 @@ def _remove():
         if client.username == user_name:
             client.logout()
     return
+
+
+__all__ = ['main']

@@ -1,32 +1,8 @@
-from pathlib import Path
-
-import requests
-from prompt_toolkit.document import Document
 from prompt_toolkit.shortcuts import input_dialog, radiolist_dialog
-from prompt_toolkit.validation import ValidationError, Validator
-from steam import webapi
 
 from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
 from src.settings import save_settings, settings
-
-__all__ = ['main', 'CertificatePathValidator']
-
-
-class CertificatePathValidator(Validator):
-    def validate(self, document: Document) -> None:
-        if not document.text:
-            raise ValidationError(message='不可为空')
-        path = Path(document.text)
-        if not path.exists():
-            raise ValidationError(message='请输入一个真实存在的路径')
-        if path.is_dir():
-            raise ValidationError(message='请输入一个有效的证书')
-        try:
-            session = requests.Session()
-            session.verify = path
-            webapi.get('ISteamWebAPIUtil', 'GetServerInfo', session=session)
-        except Exception as e:
-            raise ValidationError(message=str(e))
+from src.validator import CertificatePathValidator
 
 
 def main():
@@ -67,3 +43,6 @@ def main():
             settings['ssl'] = False
 
     save_settings()
+
+
+__all__ = ['main']

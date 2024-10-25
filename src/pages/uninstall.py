@@ -6,8 +6,6 @@ from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
 from src.path import MOD_BOOT_FILES_PATH, MODS_DIR_PATH
 from src.settings import save_settings, settings
 
-__all__ = ['main']
-
 
 def main():
     options: list[tuple[str, str]] = []
@@ -32,3 +30,6 @@ def main():
 
     save_settings()
     message_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, '卸载完成', '返回').run()
+
+
+__all__ = ['main']

@@ -4,10 +4,7 @@ from steam.client.cdn import CDNClient
 from steam.enums import EResult
 from steam.webauth import WebAuth
 
-from .settings import save_settings, settings
-
-__all__ = ['client', 'cdn_client']
-
+from src.settings import save_settings, settings
 
 client = SteamClient()
 for user_name, user_info in settings['users'].items():
@@ -39,3 +36,5 @@ for user_name, user_info in settings['users'].items():
 
 
 cdn_client = CDNClient(client)
+
+__all__ = ['client', 'cdn_client']

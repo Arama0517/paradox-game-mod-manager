@@ -7,15 +7,14 @@ from pathlib import Path
 import requests
 from loguru import logger
 from prompt_toolkit.shortcuts import input_dialog, message_dialog, radiolist_dialog
-from steam.webapi import DEFAULT_PARAMS
+from steam import webapi
 from steam.webauth import WebAuth, WebAuthException
 
-from path import CURRENT_DIR_PATH
-
-from .dialog import PROMPT_TOOLKIT_DIALOG_TITLE
-from .pages.settings.certificate import CertificatePathValidator
-from .path import DATA_DIR_PATH, MOD_BOOT_FILES_PATH, MODS_DIR_PATH
-from .settings import save_settings, settings
+from src.cmd import clear
+from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
+from src.path import CURRENT_DIR_PATH, DATA_DIR_PATH, MOD_BOOT_FILES_PATH, MODS_DIR_PATH
+from src.settings import save_settings, settings
+from src.validator import CertificatePathValidator
 
 DEFAULT_USERS = {
     'thb112259': 'steamok7416',
@@ -26,9 +25,7 @@ DEFAULT_USERS = {
 def init_ssl():
     while True:
         try:
-            requests.get(
-                f'{'https' if DEFAULT_PARAMS['https'] else 'http'}://{DEFAULT_PARAMS['apihost']}'
-            )
+            webapi.get('ISteamWebAPIUtil', 'GetServerInfo')
             break
         except requests.exceptions.SSLError:
             ssl = radiolist_dialog(
@@ -56,46 +53,6 @@ def init_ssl():
                         validator=CertificatePathValidator(),
                     ).run()
                     settings['ssl'] = certificate_path
-            save_settings()
-
-
-def init_settings():
-    settings['gameDataPath'] = str(DATA_DIR_PATH)  # 数据目录
-
-    for user_name, password in DEFAULT_USERS.items():
-        webauth = WebAuth()
-        try:
-            webauth.login(user_name, password)
-        except WebAuthException:
-            continue
-        if not webauth.logged_on:
-            continue
-        settings['users'][user_name] = {
-            'user_name': user_name,
-            'password': password,
-            'token': webauth.refresh_token,
-        }
-
-    if (
-        'ssl' not in settings
-        or type(settings['ssl']) is not bool
-        and not Path(settings['ssl']).exists()
-    ):
-        settings['ssl'] = True
-
-    if 'users' not in settings:
-        settings['users'] = {}
-
-    if 'mods' not in settings:
-        settings['mods'] = {}
-
-    if 'download_max_threads' not in settings:
-        settings['download_max_threads'] = min(32, max(1, (os.cpu_count() or 1) // 2))
-
-    if 'chunk_size' not in settings:
-        settings['max_chunk_size'] = 1024 * 1024
-
-    save_settings()
 
 
 def main():
@@ -113,25 +70,62 @@ def main():
 
     sys.excepthook = except_hook
 
+    clear()
+
+    # 初始化配置文件
+    if (
+        'ssl' not in settings
+        or type(settings['ssl']) is not bool
+        and not Path(settings['ssl']).exists()
+    ):
+        settings['ssl'] = True
+    init_ssl()
+
+    if 'users' not in settings:
+        settings['users'] = {}
+        for user_name, password in DEFAULT_USERS.items():
+            webauth = WebAuth()
+            try:
+                webauth.login(user_name, password)
+            except WebAuthException:
+                continue
+            if not webauth.logged_on:
+                continue
+            settings['users'][user_name] = {
+                'user_name': user_name,
+                'password': password,
+                'token': webauth.refresh_token,
+            }
+
+    if 'mods' not in settings:
+        settings['mods'] = {}
+
+    if 'download_max_threads' not in settings:
+        settings['download_max_threads'] = min(32, max(1, (os.cpu_count() or 1) // 2))
+
+    if 'chunk_size' not in settings:
+        settings['max_chunk_size'] = 1024 * 1024
+
+    settings['gameDataPath'] = str(DATA_DIR_PATH)  # 数据目录
+
+    save_settings()
+
+    MODS_DIR_PATH.mkdir(parents=True, exist_ok=True)
+    MOD_BOOT_FILES_PATH.mkdir(parents=True, exist_ok=True)
+
+    from src import pages
+    from src.steam_clients import client
+
     def exit_hook():
-        if client.logged_on:
+        if client is not None and client.logged_on:
             logger.info('登出')
             client.logout()
 
     atexit.register(exit_hook)
 
-    init_ssl()
-
-    # 初始化配置文件
-    init_settings()
-
-    MODS_DIR_PATH.mkdir(parents=True, exist_ok=True)
-    MOD_BOOT_FILES_PATH.mkdir(parents=True, exist_ok=True)
-
-    from . import pages
-    from .steam_clients import client
-
     while True:
+        clear()
+
         text = '请选择一个选项'
         options = [
             ('start', '启动客户端'),

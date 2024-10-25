@@ -10,18 +10,18 @@ from rich.progress import (
     ProgressColumn,
     SpinnerColumn,
     Task,
+    TaskID,
     TaskProgressColumn,
     TextColumn,
     TimeRemainingColumn,
 )
 from rich.text import Text
 from steam.client.cdn import CDNDepotFile, CDNDepotManifest
+from steam.exceptions import SteamError
 
-from .path import MODS_DIR_PATH
-from .settings import settings
-from .steam_clients import cdn_client
-
-__all__ = ['download']
+from src.path import MODS_DIR_PATH
+from src.settings import settings
+from src.steam_clients import cdn_client
 
 
 def _format_size(size: int | float):
@@ -67,21 +67,52 @@ class DownloadSpeedColumn(ProgressColumn):
         return self.message
 
 
-async def _download(item_id: str) -> timedelta:
-    manifest: CDNDepotManifest | Exception = cdn_client.get_manifest_for_workshop_item(
-        int(item_id)
+async def write(
+    cdn_file: CDNDepotFile, download_dir_path: Path, progress: Progress, task_id: TaskID
+):
+    file_path: Path = download_dir_path / cdn_file.filename
+    file_path.parent.mkdir(parents=True, exist_ok=True)
+
+    async with aiofiles.open(file_path, 'wb') as f:
+        loop = asyncio.get_event_loop()
+        while True:
+            data: bytes = await loop.run_in_executor(
+                None, cdn_file.read, settings['max_chunk_size']
+            )
+            if not data:
+                break
+            await f.write(data)
+            progress.advance(task_id, len(data))
+
+
+async def download_worker(
+    queue: asyncio.Queue[CDNDepotFile],
+    download_dir_path: Path,
+    progress: Progress,
+    task_id: TaskID,
+):
+    while not queue.empty():
+        cdn_file = await queue.get()
+        await write(cdn_file, download_dir_path, progress, task_id)
+        queue.task_done()
+
+
+async def download_async(item_id: int) -> timedelta:
+    manifest: CDNDepotManifest | SteamError = cdn_client.get_manifest_for_workshop_item(
+        item_id
     )
-    if isinstance(manifest, Exception):
+    if isinstance(manifest, SteamError):
         raise manifest
 
     files_size = 0
-    queue: asyncio.Queue[CDNDepotFile] = asyncio.Queue()
+    queue = asyncio.Queue()
     for cdn_file in manifest.iter_files():
         cdn_file: CDNDepotFile
         if cdn_file.is_directory:
             continue
         await queue.put(cdn_file)
         files_size += cdn_file.size
+    download_path = MODS_DIR_PATH / str(item_id)
 
     start_time = datetime.now()
     with Progress(
@@ -93,30 +124,16 @@ async def _download(item_id: str) -> timedelta:
         TimeRemainingColumn(),
     ) as progress:
         task_id = progress.add_task('[bold dim]正在下载模组中...', total=files_size)
-
-        async def download_worker():
-            while not queue.empty():
-                cdn_file = await queue.get()
-                file_path: Path = MODS_DIR_PATH / item_id / cdn_file.filename
-                file_path.parent.mkdir(parents=True, exist_ok=True)
-
-                async with aiofiles.open(file_path, 'wb') as f:
-                    loop = asyncio.get_event_loop()
-                    while True:
-                        data: bytes = await loop.run_in_executor(
-                            None, cdn_file.read, settings['max_chunk_size']
-                        )
-                        if not data:
-                            break
-                        await f.write(data)
-                        progress.advance(task_id, len(data))
-                queue.task_done()
-
-        tasks = [download_worker() for _ in range(settings['download_max_threads'])]
-
+        tasks = [
+            download_worker(queue, download_path, progress, task_id)
+            for _ in range(settings['download_max_threads'])
+        ]
         await asyncio.gather(*tasks)
     return datetime.now() - start_time
 
 
-def download(item_id: str) -> timedelta:
-    return asyncio.run(_download(item_id))
+def download(item_id: int) -> timedelta:
+    return asyncio.run(download_async(item_id))
+
+
+__all__ = ['download']
