@@ -10,6 +10,8 @@ from prompt_toolkit.shortcuts import input_dialog, message_dialog, radiolist_dia
 from steam.webapi import DEFAULT_PARAMS
 from steam.webauth import WebAuth, WebAuthException
 
+from path import CURRENT_DIR_PATH
+
 from .dialog import PROMPT_TOOLKIT_DIALOG_TITLE
 from .pages.settings.certificate import CertificatePathValidator
 from .path import DATA_DIR_PATH, MOD_BOOT_FILES_PATH, MODS_DIR_PATH
@@ -98,9 +100,14 @@ def init_settings():
 
 def main():
     def except_hook(exc_type, exc_value, exc_traceback):
+        error_message_file_path = CURRENT_DIR_PATH / 'error.txt'
+        with error_message_file_path.open('w', encoding='utf-8') as f:
+            f.write(
+                ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))
+            )
         message_dialog(
             PROMPT_TOOLKIT_DIALOG_TITLE,
-            f"发生了一个错误: \n{''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))}",  # noqa: E501
+            f'发生了一个错误\n请前往<https://github.com/Arama0517/hoi4-mods-manager/issues/>提出issue\n错误信息路径: {error_message_file_path}',  # noqa: E501
             '退出',
         ).run()
 
