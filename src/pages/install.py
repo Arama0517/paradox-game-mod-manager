@@ -1,9 +1,12 @@
+import shutil
+
 from prompt_toolkit.document import Document
 from prompt_toolkit.shortcuts import input_dialog, message_dialog, yes_no_dialog
 from prompt_toolkit.validation import ValidationError, Validator
 from steam import webapi
 from steam.enums import EResult
 
+from path import MODS_DIR_PATH
 from src import mods
 from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
 from src.settings import save_settings, settings
@@ -74,9 +77,8 @@ def main() -> None:
                 '继续',
             ).run()
         except Exception as e:
-            # message_dialog(
-            #     PROMPT_TOOLKIT_DIALOG_TITLE, f'下载失败, 请稍后再试\n错误: {e}', '继续'
-            # ).run()
-            # shutil.rmtree(MODS_DIR_PATH / item_id, ignore_errors=True)
-            raise e
+            message_dialog(
+                PROMPT_TOOLKIT_DIALOG_TITLE, f'下载失败, 请稍后再试\n错误: {e}', '继续'
+            ).run()
+            shutil.rmtree(MODS_DIR_PATH / item_id, ignore_errors=True)
             continue

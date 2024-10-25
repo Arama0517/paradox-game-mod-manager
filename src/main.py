@@ -1,13 +1,12 @@
 import atexit
 import os
 import sys
+import traceback
 from pathlib import Path
 
 import requests
 from loguru import logger
-from prompt_toolkit.shortcuts import input_dialog, radiolist_dialog
-from rich import print
-from rich.traceback import Traceback
+from prompt_toolkit.shortcuts import input_dialog, message_dialog, radiolist_dialog
 from steam.webapi import DEFAULT_PARAMS
 from steam.webauth import WebAuth, WebAuthException
 
@@ -99,13 +98,12 @@ def init_settings():
 
 def main():
     def except_hook(exc_type, exc_value, exc_traceback):
-        #         message_dialog(
-        #             PROMPT_TOOLKIT_DIALOG_TITLE,
-        #             f"""发生了一个错误:
-        # {''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))}""",
-        #             '退出',
-        #         ).run()
-        print(Traceback.from_exception(exc_type, exc_value, exc_traceback))
+        message_dialog(
+            PROMPT_TOOLKIT_DIALOG_TITLE,
+            f"""发生了一个错误:
+{''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))}""",
+            '退出',
+        ).run()
 
     sys.excepthook = except_hook
 
