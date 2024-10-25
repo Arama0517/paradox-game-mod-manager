@@ -6,9 +6,9 @@ from prompt_toolkit.validation import ValidationError, Validator
 from steam import webapi
 from steam.enums import EResult
 
-from path import MODS_DIR_PATH
 from src import mods
 from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
+from src.path import MODS_DIR_PATH
 from src.settings import save_settings, settings
 
 __all__ = ['main']
