@@ -17,11 +17,8 @@ from rich.progress import (
 )
 from rich.text import Text
 from steam.client.cdn import CDNDepotFile, CDNDepotManifest
-from steam.exceptions import SteamError
 
-from src.path import MODS_DIR_PATH
 from src.settings import settings
-from src.steam_clients import cdn_client
 
 
 def _format_size(size: int | float):
@@ -97,13 +94,9 @@ async def download_worker(
         queue.task_done()
 
 
-async def download_async(item_id: int) -> timedelta:
-    manifest: CDNDepotManifest | SteamError = cdn_client.get_manifest_for_workshop_item(
-        item_id
-    )
-    if isinstance(manifest, SteamError):
-        raise manifest
-
+async def download_async(
+    manifest: CDNDepotManifest, download_dir_path: Path
+) -> timedelta:
     files_size = 0
     queue = asyncio.Queue()
     for cdn_file in manifest.iter_files():
@@ -112,7 +105,6 @@ async def download_async(item_id: int) -> timedelta:
             continue
         await queue.put(cdn_file)
         files_size += cdn_file.size
-    download_path = MODS_DIR_PATH / str(item_id)
 
     start_time = datetime.now()
     with Progress(
@@ -125,15 +117,15 @@ async def download_async(item_id: int) -> timedelta:
     ) as progress:
         task_id = progress.add_task('[bold dim]正在下载模组中...', total=files_size)
         tasks = [
-            download_worker(queue, download_path, progress, task_id)
+            download_worker(queue, download_dir_path, progress, task_id)
             for _ in range(settings['download_max_threads'])
         ]
         await asyncio.gather(*tasks)
     return datetime.now() - start_time
 
 
-def download(item_id: int) -> timedelta:
-    return asyncio.run(download_async(item_id))
+def download(manifest: CDNDepotManifest, download_dir_path: Path) -> timedelta:
+    return asyncio.run(download_async(manifest, download_dir_path))
 
 
 __all__ = ['download']
