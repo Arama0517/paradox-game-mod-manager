@@ -19,16 +19,4 @@ def ssl():
     Session.__init__ = patched
 
 
-def init():
-    from loguru import logger
-    from rich.logging import RichHandler
-
-    # 设置 logger
-    logger.remove()
-    logger.add(RichHandler())
-
-    # 适配用反代加速Steam的工具
-    ssl()
-
-
-init()
+ssl()

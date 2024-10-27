@@ -16,7 +16,7 @@ def main():
         '确认',
         '返回',
         validator=IntValidator(),
-        default=settings['max_chunk_size'],
+        default=str(settings['max_chunk_size']),
     ).run()
     if not _max_chunk_size and _max_chunk_size == settings['max_chunk_size']:
         return

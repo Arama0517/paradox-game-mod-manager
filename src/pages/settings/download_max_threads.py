@@ -12,7 +12,7 @@ def main():
         '确认',
         '返回',
         validator=IntValidator(),
-        default=settings['download_max_threads'],
+        default=str(settings['download_max_threads']),
     ).run()
     if not _download_max_threads:
         return

@@ -171,4 +171,4 @@ cython_debug/
 /mods/
 /game_data/
 /launcher-settings.json
-/error.txt
+/error_traceback.txt

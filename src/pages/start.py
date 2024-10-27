@@ -2,8 +2,7 @@ import re
 import subprocess
 from pathlib import Path
 
-from loguru import logger
-
+from src.logger import logger
 from src.path import CURRENT_DIR_PATH, MOD_BOOT_FILES_PATH, MODS_DIR_PATH
 
 _PATH_REGEX = r'(?:^|[^a-zA-Z_])path\s*=\s*"([^"]+)"'

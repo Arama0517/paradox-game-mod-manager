@@ -21,18 +21,6 @@ from steam.client.cdn import CDNDepotFile, CDNDepotManifest
 from src.settings import settings
 
 
-def _format_size(size: int | float):
-    units = ['B', 'KiB', 'MiB', 'GiB', 'TiB']
-    size = size
-    unit_index = 0
-
-    while size >= 1024 and unit_index < len(units) - 1:
-        size /= 1024
-        unit_index += 1
-
-    return f'{size:.2f} {units[unit_index]}'
-
-
 class DownloadSpeedColumn(ProgressColumn):
     def __init__(self):
         super().__init__()
@@ -43,14 +31,22 @@ class DownloadSpeedColumn(ProgressColumn):
 
     @classmethod
     def get_message(cls, speed: int | float) -> Text:
-        text = f'{_format_size(speed)}/s'
+        units = ['B', 'KiB', 'MiB', 'GiB', 'TiB']
+        unit_index = 0
+        size = speed
+        while size >= 1024 and unit_index < len(units) - 1:
+            size /= 1024
+            unit_index += 1
+
+        text = Text(f'{size:.2f} {units[unit_index]}/s')
         mebibyte = 1024 * 1024  # MiB
         if speed >= 5 * mebibyte:
-            return Text(text, style='green')
+            text.style = 'green'
         elif speed >= 2 * mebibyte:
-            return Text(text, style='yellow')
+            text.style = 'yellow'
         else:
-            return Text(text, style='red')
+            text.style = 'red'
+        return text
 
     def render(self, task: Task) -> RenderableType:
         current_time = datetime.now()
@@ -115,17 +111,20 @@ async def download_async(
         DownloadSpeedColumn(),
         TimeRemainingColumn(),
     ) as progress:
-        task_id = progress.add_task('[bold dim]正在下载模组中...', total=files_size)
+        task_id = progress.add_task(
+            f'[bold dim]正在下载: {manifest.name} ', total=files_size
+        )
         tasks = [
             download_worker(queue, download_dir_path, progress, task_id)
-            for _ in range(settings['download_max_threads'])
+            for _ in range(min(settings['download_max_threads'], queue.qsize()))
         ]
         await asyncio.gather(*tasks)
+        progress.update(task_id, description='[bold dim]下载成功')
     return datetime.now() - start_time
 
 
-def download(manifest: CDNDepotManifest, download_dir_path: Path) -> timedelta:
+def download_manifest(manifest: CDNDepotManifest, download_dir_path: Path) -> timedelta:
     return asyncio.run(download_async(manifest, download_dir_path))
 
 
-__all__ = ['download']
+__all__ = ['download_manifest']

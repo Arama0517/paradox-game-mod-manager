@@ -1,17 +1,16 @@
-import atexit
 import os
 import sys
 import traceback
 from pathlib import Path
 
 import requests
-from loguru import logger
 from prompt_toolkit.shortcuts import input_dialog, message_dialog, radiolist_dialog
 from steam import webapi
 from steam.webauth import WebAuth, WebAuthException
 
 from src.cmd import clear
 from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
+from src.logger import logger
 from src.path import CURRENT_DIR_PATH, DATA_DIR_PATH, MOD_BOOT_FILES_PATH, MODS_DIR_PATH
 from src.settings import save_settings, settings
 from src.validator import CertificatePathValidator
@@ -56,20 +55,6 @@ def init_ssl():
 
 
 def main():
-    def except_hook(exc_type, exc_value, exc_traceback):
-        error_message_file_path = CURRENT_DIR_PATH / 'error.txt'
-        with error_message_file_path.open('w', encoding='utf-8') as f:
-            f.write(
-                ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))
-            )
-        message_dialog(
-            PROMPT_TOOLKIT_DIALOG_TITLE,
-            f'发生了一个错误\n请前往<https://github.com/Arama0517/hoi4-mods-manager/issues/>提出issue\n错误信息路径: {error_message_file_path}',  # noqa: E501
-            '退出',
-        ).run()
-
-    sys.excepthook = except_hook
-
     clear()
 
     # 初始化配置文件
@@ -114,14 +99,7 @@ def main():
     MOD_BOOT_FILES_PATH.mkdir(parents=True, exist_ok=True)
 
     from src import pages
-    from src.steam_clients import client
-
-    def exit_hook():
-        if client is not None and client.logged_on:
-            logger.info('登出')
-            client.logout()
-
-    atexit.register(exit_hook)
+    from src.steam_clients import client, login
 
     while True:
         clear()
@@ -132,6 +110,7 @@ def main():
         ]
         if not client.logged_on:
             text += '\n没有可用的账号, 无法使用模组相关功能'
+            options += [('relogin', '重试登录')]
         else:
             options += [
                 ('install', '安装模组'),
@@ -154,12 +133,34 @@ def main():
                 pages.update()
             case 'settings':
                 pages.settings()
+            case 'relogin':
+                login(client)
             case _:
                 break
 
 
+ERROR_TRACEBACK_FILE_PATH = CURRENT_DIR_PATH / 'error_traceback.txt'
+ERROR_TEXT = f"""发生了一个错误
+请前往<https://github.com/Arama0517/hoi4-mods-manager/issues/>提出issue
+错误信息路径: {ERROR_TRACEBACK_FILE_PATH}"""
+
 if __name__ == '__main__':
     try:
-        sys.exit(main())
+        main()
     except KeyboardInterrupt:
         pass
+    except Exception:
+        error_traceback_file_path = CURRENT_DIR_PATH / 'error_traceback.txt'
+        with error_traceback_file_path.open('w', encoding='utf-8') as f:
+            traceback.print_exc(file=f)
+        message_dialog(
+            PROMPT_TOOLKIT_DIALOG_TITLE,
+            ERROR_TEXT,
+            '退出',
+        ).run()
+    finally:
+        from src.steam_clients import client
+
+        if client is not None and client.logged_on:
+            logger.info('登出')
+            client.logout()

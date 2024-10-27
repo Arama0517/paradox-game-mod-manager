@@ -1,20 +1,19 @@
-from loguru import logger
 from steam.client import SteamClient
 from steam.client.cdn import CDNClient
 from steam.enums import EResult
 from steam.webauth import WebAuth
 
+from src.logger import logger
 from src.settings import save_settings, settings
 
 
-def get_client() -> SteamClient:
-    steam_client = SteamClient()
+def login(client: SteamClient):
     for user_name, user_info in settings['users'].items():
         logger.info(f'尝试登录: {user_name}')
         while True:
-            steam_client.logout()
+            client.logout()
 
-            result: EResult = steam_client.login(
+            result: EResult = client.login(
                 user_name, access_token=settings['users'][user_name]['token']
             )
             match result:
@@ -35,13 +34,14 @@ def get_client() -> SteamClient:
                         f'登录失败, 错误: {result.name}, 错误代码: {result.value}'
                     )
             break
-        if steam_client.logged_on:
+        if client.logged_on:
             break
-    return steam_client
 
 
-client = get_client()
+client = SteamClient()
+login(client)
+
 cdn_client = CDNClient(client)
 cdn_client.get_content_server()  # 提前获取内容服务器, 省时间
 
-__all__ = ['get_client', 'client', 'cdn_client']
+__all__ = ['login', 'client', 'cdn_client']
