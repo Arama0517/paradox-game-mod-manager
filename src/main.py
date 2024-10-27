@@ -1,6 +1,7 @@
 import os
 import sys
 import traceback
+import webbrowser
 from pathlib import Path
 
 import requests
@@ -141,18 +142,20 @@ def main():
 
 ERROR_TRACEBACK_FILE_PATH = CURRENT_DIR_PATH / 'error_traceback.txt'
 ERROR_TEXT = f"""发生了一个错误
-请前往<https://github.com/Arama0517/hoi4-mods-manager/issues/>提出issue
+请在打开的网页里填写你遇到的问题, 复现的过程
 错误信息路径: {ERROR_TRACEBACK_FILE_PATH}"""
+ERROR_ISSUE_URL = 'https://github.com/Arama0517/hoi4-mods-manager/issues/new'
 
 if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
         pass
-    except Exception:
+    except Exception as e:
         error_traceback_file_path = CURRENT_DIR_PATH / 'error_traceback.txt'
         with error_traceback_file_path.open('w', encoding='utf-8') as f:
-            traceback.print_exc(file=f)
+            traceback.print_exception(e, file=f)
+        webbrowser.open(ERROR_ISSUE_URL)
         message_dialog(
             PROMPT_TOOLKIT_DIALOG_TITLE,
             ERROR_TEXT,
