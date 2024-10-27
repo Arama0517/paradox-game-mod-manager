@@ -155,7 +155,7 @@ if __name__ == '__main__':
         error_traceback_file_path = CURRENT_DIR_PATH / 'error_traceback.txt'
         with error_traceback_file_path.open('w', encoding='utf-8') as f:
             traceback.print_exception(e, file=f)
-        webbrowser.open(ERROR_ISSUE_URL)
+        webbrowser.open(ERROR_ISSUE_URL, autoraise=False)
         message_dialog(
             PROMPT_TOOLKIT_DIALOG_TITLE,
             ERROR_TEXT,

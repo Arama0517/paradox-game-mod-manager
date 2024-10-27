@@ -1,0 +1,86 @@
+name: 反馈Bug
+description: 提交Bug反馈
+labels: ["bug", "triage"]
+body:
+  - type: textarea
+    attributes:
+      label: 错误跟踪文件
+      description: 位于程序同一目录下 error_traceback.txt 的内容
+      placeholder: 请将文件内的内容复制到这里
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 如何重现?
+      placeholder: 简短的描述重现此问题的步骤
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: 版本号
+      description: 你运行的是哪个版本?
+      options:
+        - v1.3.0
+        - v1.2.0
+      default: 0
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: 搜索
+      options:
+        - label: 在打开这个 issue 之前, 我搜索过其他的 issue
+          required: true
+
+#  - type: input
+#    id: contact
+#    attributes:
+#      label: Contact Details
+#      description: How can we get in touch with you if we need more info?
+#      placeholder: ex. email@example.com
+#    validations:
+#      required: false
+#  - type: textarea
+#    id: what-happened
+#    attributes:
+#      label: What happened?
+#      description: Also tell us, what did you expect to happen?
+#      placeholder: Tell us what you see!
+#      value: "A bug happened!"
+#    validations:
+#      required: true
+#  - type: dropdown
+#    id: version
+#    attributes:
+#      label: Version
+#      description: What version of our software are you running?
+#      options:
+#        - 1.0.2 (Default)
+#        - 1.0.3 (Edge)
+#      default: 0
+#    validations:
+#      required: true
+#  - type: dropdown
+#    id: browsers
+#    attributes:
+#      label: What browsers are you seeing the problem on?
+#      multiple: true
+#      options:
+#        - Firefox
+#        - Chrome
+#        - Safari
+#        - Microsoft Edge
+#  - type: textarea
+#    id: logs
+#    attributes:
+#      label: Relevant log output
+#      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+#      render: shell
+#  - type: checkboxes
+#    id: terms
+#    attributes:
+#      label: Code of Conduct
+#      description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com).
+#      options:
+#        - label: I agree to follow this project's Code of Conduct
+#          required: true
