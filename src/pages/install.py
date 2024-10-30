@@ -107,8 +107,8 @@ def main():
         manifests = cdn.get_manifests_for_workshop_item(need_install_items_id)
 
         for item_id, result in manifests.items():
-            mod_install_duration = cdn.download_manifest(
-                result['manifest'], MODS_DIR_PATH / item_id
+            mod_install_duration = (
+                cdn.download_manifest(result['manifest'], MODS_DIR_PATH / item_id)
             ).total_seconds()
             settings['mods'][item_id] = result['item_info']
             save_settings()

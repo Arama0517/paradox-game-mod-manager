@@ -3,13 +3,13 @@ name: 检查代码
 on:
   push:
     paths:
-      - "pyproject.toml"
+      - "../../pyproject.toml2"
       - "**/*.py"
       - "Taskfile.yml"
       - ".github/workflows/*.yml"
   pull_request:
     paths:
-      - "pyproject.toml"
+      - "../../pyproject.toml2"
       - "**/*.py"
       - "Taskfile.yml"
       - ".github/workflows/*.yml"
@@ -19,18 +19,18 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v3
+      - uses: pdm-project/setup-pdm@v4
       - uses: arduino/setup-task@v2
 
       - name: 运行测试
-        run: task test
+        run: pdm run test
 
   check:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v3
+      - uses: pdm-project/setup-pdm@v4
       - uses: arduino/setup-task@v2
 
       - name: 运行 ruff
-        run: task check -- --no-fix --output-format=github
+        run: pdm run check --no-fix --output-format=github

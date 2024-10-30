@@ -1,7 +1,7 @@
 from prompt_toolkit.shortcuts import radiolist_dialog
 
 from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
-from src.pages.settings import certificate, download_max_threads, max_chunk_size, users
+from src.pages.settings import certificate, max_chunk_size, max_threads, users
 
 __all__ = ['main']
 
@@ -9,7 +9,7 @@ __all__ = ['main']
 def main():
     options = [
         ('users', 'steam账号'),
-        ('download_max_threads', '下载时使用线程的最大数量'),
+        ('max_threads', '一些异步操作时多线程的数量'),
         ('max_chunk_size', '下载时切片的大小'),
         ('certificate', '证书验证'),
     ]
@@ -19,8 +19,8 @@ def main():
         ).run():
             case 'users':
                 users.main()
-            case 'download_max_threads':
-                download_max_threads.main()
+            case 'max_threads':
+                max_threads.main()
             case 'max_chunk_size':
                 max_chunk_size.main()
             case 'certificate':

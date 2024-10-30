@@ -1,6 +1,8 @@
 import asyncio
+from asyncio import AbstractEventLoop
 from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Coroutine
 
 import aiofiles
 from rich.console import RenderableType
@@ -60,41 +62,11 @@ class DownloadSpeedColumn(ProgressColumn):
         return self.message
 
 
-async def write(
-    cdn_file: CDNDepotFile, download_dir_path: Path, progress: Progress, task_id: TaskID
-):
-    file_path: Path = download_dir_path / cdn_file.filename
-    file_path.parent.mkdir(parents=True, exist_ok=True)
-
-    async with aiofiles.open(file_path, 'wb') as f:
-        loop = asyncio.get_event_loop()
-        while True:
-            data: bytes = await loop.run_in_executor(
-                None, cdn_file.read, settings['max_chunk_size']
-            )
-            if not data:
-                break
-            await f.write(data)
-            progress.advance(task_id, len(data))
-
-
-async def download_worker(
-    queue: asyncio.Queue[CDNDepotFile],
-    download_dir_path: Path,
-    progress: Progress,
-    task_id: TaskID,
-):
-    while not queue.empty():
-        cdn_file = await queue.get()
-        await write(cdn_file, download_dir_path, progress, task_id)
-        queue.task_done()
-
-
-async def download_async(
+async def download_manifest_async(
     manifest: CDNDepotManifest, download_dir_path: Path
 ) -> timedelta:
     files_size = 0
-    queue = asyncio.Queue()
+    queue: asyncio.Queue[CDNDepotFile] = asyncio.Queue()
     for cdn_file in manifest.iter_files():
         cdn_file: CDNDepotFile
         if cdn_file.is_directory:
@@ -102,7 +74,7 @@ async def download_async(
         await queue.put(cdn_file)
         files_size += cdn_file.size
 
-    start_time = datetime.now()
+    start_time: datetime = datetime.now()
     with Progress(
         SpinnerColumn(),
         TextColumn('[progress.description]{task.description}'),
@@ -111,12 +83,31 @@ async def download_async(
         DownloadSpeedColumn(),
         TimeRemainingColumn(),
     ) as progress:
-        task_id = progress.add_task(
+        loop: AbstractEventLoop = asyncio.get_event_loop()
+        task_id: TaskID = progress.add_task(
             f'[bold dim]正在下载: {manifest.name} ', total=files_size
         )
-        tasks = [
-            download_worker(queue, download_dir_path, progress, task_id)
-            for _ in range(min(settings['download_max_threads'], queue.qsize()))
+
+        async def worker():
+            while not queue.empty():
+                cdn_file: CDNDepotFile = await queue.get()
+
+                file_path: Path = download_dir_path / cdn_file.filename
+                file_path.parent.mkdir(parents=True, exist_ok=True)
+                async with aiofiles.open(file_path, 'wb') as f:
+                    while True:
+                        data: bytes = await loop.run_in_executor(
+                            None, cdn_file.read, settings['max_chunk_size']
+                        )
+                        if not data:
+                            break
+                        await f.write(data)
+                        progress.advance(task_id, len(data))
+
+                queue.task_done()
+
+        tasks: list[Coroutine] = [
+            worker() for _ in range(min(settings['max_threads'], queue.qsize()))
         ]
         await asyncio.gather(*tasks)
         progress.update(task_id, description='[bold dim]下载成功')
@@ -124,7 +115,7 @@ async def download_async(
 
 
 def download_manifest(manifest: CDNDepotManifest, download_dir_path: Path) -> timedelta:
-    return asyncio.run(download_async(manifest, download_dir_path))
+    return asyncio.run(download_manifest_async(manifest, download_dir_path))
 
 
 __all__ = ['download_manifest']

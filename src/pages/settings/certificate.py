@@ -36,9 +36,7 @@ def main():
                 PROMPT_TOOLKIT_DIALOG_TITLE,
                 '请输入证书路径',
                 validator=CertificatePathValidator(),
-                default=settings['ssl']
-                if default == ssl
-                else '',
+                default=settings['ssl'] if default == ssl else '',
             ).run()
             settings['ssl'] = certificate_path
         case 'disable':

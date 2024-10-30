@@ -1,11 +1,14 @@
 import re
 import subprocess
 from pathlib import Path
+from re import Pattern
 
 from src.logger import logger
 from src.path import CURRENT_DIR_PATH, MOD_BOOT_FILES_PATH, MODS_DIR_PATH
 
-_PATH_REGEX = r'(?:^|[^a-zA-Z_])path\s*=\s*"([^"]+)"'
+
+def get_pattern(field: str) -> Pattern[str]:
+    return re.compile(rf'(?:^|[^a-zA-Z_]){field}\s*=\s*"([^"]+)"')
 
 
 def main():
@@ -14,17 +17,17 @@ def main():
             continue
         with file.open('r', encoding='utf-8') as f:
             data = f.read()
-        result = re.search(_PATH_REGEX, data, flags=0)
+        mod_dir_path = get_pattern('path').search(data)
 
         # 没有找到path字段
-        if not result:
+        if not mod_dir_path:
             logger.info(f'删除无效定位文件: {file}')
             file.unlink()
             continue
 
-        mod_path = Path(result.group(1))
+        mod_dir_path = Path(mod_dir_path.group())
         # mod源目录不存在
-        if not mod_path.exists():
+        if not mod_dir_path.exists():
             logger.info(f'删除无效定位文件: {file}')
             file.unlink()
             continue
@@ -46,10 +49,10 @@ def main():
         if not mod_boot_file_path.exists():
             with mod_boot_file_path.open('w', encoding='utf-8') as f:
                 data = mod_decsriptor_file_path.read_text(encoding='utf-8')
-                result = re.compile(_PATH_REGEX).sub(f'path="{mod.as_posix()}"', data)
+                mod_dir_path = get_pattern('path').sub(f'path="{mod.as_posix()}"', data)
                 # 有些模组会在描述文件里自带path, 这里覆盖一下
-                if result != data:
-                    f.write(result)
+                if mod_dir_path != data:
+                    f.write(mod_dir_path)
                 else:
                     # 没有自带的情况
                     f.write(data)

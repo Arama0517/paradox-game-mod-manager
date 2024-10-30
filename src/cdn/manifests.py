@@ -33,6 +33,7 @@ def get_manifests_for_workshop_item(
         TimeRemainingColumn(),
     ) as progress:
         task_id = progress.add_task('[bold dim]正在获取清单中...', total=len(items_id))
+
         for item_info in items_info:
             progress.update(
                 task_id,

@@ -51,9 +51,9 @@
 
 ## 环境要求
 
-- [uv](https://docs.astral.sh/uv/getting-started/installation/)
-- [VS 2022 Build Tools](https://visualstudio.microsoft.com/zh-hans/downloads/#build-tools-for-visual-studio-2022) `nuitka` 编译
-- [task](https://taskfile.dev/installation/) 类似 `make`
+- [python `3.12.*`](https://www.python.org/downloads/) `nuitka`尚未支持 `3.13.*`
+- [pdm](https://pdm-project.org/zh-cn/latest/)
+- [VS 2022 Build Tools](https://visualstudio.microsoft.com/zh-hans/downloads/#build-tools-for-visual-studio-2022) `nuitka` 编译 (可选)
 
 ## 初始化项目
 
@@ -61,21 +61,10 @@
 2. 在项目根目录创建一个 `launcher-settings.json`, 内容:
 
 ```json
-{}
+{
+  "gameId": "hoi4"
+}
 ```
 
-3. 运行 `uv sync`
-
-## 加速 `uv` 下载依赖和 `python`
-
-> [!TIP]
-> 仅适用于中国地区用户
-
-1. 设置环境变量 `UV_PYTHON_INSTALL_MIRROR` 为 `https://ghp.ci/https://github.com/indygreg/python-build-standalone/releases/download`
-2. 进入 `~\AppData\Roaming\uv` _如果没有这个目录就新建一个_
-3. 新建 `uv.toml` 文件, 内容:
-
-```toml
-# 这里的镜像可以换成你自己喜欢的, 这里用的清华源
-index-url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+3. 运行 `pdm install`
 ```

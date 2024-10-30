@@ -12,7 +12,12 @@ from steam.webauth import WebAuth, WebAuthException
 from src.cmd import clear
 from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
 from src.logger import logger
-from src.path import CURRENT_DIR_PATH, DATA_DIR_PATH, MOD_BOOT_FILES_PATH, MODS_DIR_PATH
+from src.path import (
+    CURRENT_DIR_PATH,
+    DATA_DIR_PATH,
+    MOD_BOOT_FILES_PATH,
+    MODS_DIR_PATH,
+)
 from src.settings import save_settings, settings
 from src.validator import CertificatePathValidator
 
@@ -40,8 +45,6 @@ def init_ssl():
                 ],
             ).run()
             match ssl:
-                case None:
-                    sys.exit(1)
                 case 'retry':
                     continue
                 case 'disable_ssl':
@@ -50,13 +53,24 @@ def init_ssl():
                     certificate_path = input_dialog(
                         PROMPT_TOOLKIT_DIALOG_TITLE,
                         '请输入证书路径',
+                        '确认',
+                        '退出',
                         validator=CertificatePathValidator(),
                     ).run()
+                    if not certificate_path:
+                        sys.exit(1)
                     settings['ssl'] = certificate_path
+                case _:
+                    sys.exit(1)
 
 
 def main():
     clear()
+
+    if settings['gameId'] != 'hoi4':
+        message_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, '目前仅支持钢铁雄心4', '退出').run()
+        sys.exit(1)
+    settings['gameDataPath'] = str(DATA_DIR_PATH)  # 数据目录
 
     # 初始化配置文件
     if (
@@ -86,13 +100,11 @@ def main():
     if 'mods' not in settings:
         settings['mods'] = {}
 
-    if 'download_max_threads' not in settings:
-        settings['download_max_threads'] = min(32, max(1, (os.cpu_count() or 1) // 2))
+    if 'max_threads' not in settings:
+        settings['max_threads'] = min(32, max(1, (os.cpu_count() or 1) // 2))
 
     if 'chunk_size' not in settings:
         settings['max_chunk_size'] = 1024 * 1024
-
-    settings['gameDataPath'] = str(DATA_DIR_PATH)  # 数据目录
 
     save_settings()
 
@@ -107,7 +119,7 @@ def main():
 
         text = '请选择一个选项'
         options = [
-            ('start', '启动客户端'),
+            ('start', '启动游戏客户端'),
         ]
         if not client.logged_on:
             text += '\n没有可用的账号, 无法使用模组相关功能'
@@ -142,14 +154,14 @@ def main():
 
 ERROR_TRACEBACK_FILE_PATH = CURRENT_DIR_PATH / 'error_traceback.txt'
 ERROR_TEXT = f"""发生了一个错误
-请在打开的网页里填写你遇到的问题, 复现的过程
-错误信息路径: {ERROR_TRACEBACK_FILE_PATH}"""
-ERROR_ISSUE_URL = 'https://github.com/Arama0517/hoi4-mods-manager/issues/new'
+请在打开的网页里选择反馈Bug后填写你遇到的问题, 复现的过程和错误跟踪文件中的内容
+错误跟踪文件路径: {ERROR_TRACEBACK_FILE_PATH}"""
+ERROR_ISSUE_URL = 'https://github.com/Arama0517/hoi4-mods-manager/issues/new/choose'
 
 if __name__ == '__main__':
     try:
         main()
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, EOFError):
         pass
     except Exception as e:
         error_traceback_file_path = CURRENT_DIR_PATH / 'error_traceback.txt'
