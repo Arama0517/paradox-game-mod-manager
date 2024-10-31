@@ -51,9 +51,9 @@
 
 ## 环境要求
 
-- [python `3.12.*`](https://www.python.org/downloads/) `nuitka`尚未支持 `3.13.*`
-- [pdm](https://pdm-project.org/zh-cn/latest/)
-- [VS 2022 Build Tools](https://visualstudio.microsoft.com/zh-hans/downloads/#build-tools-for-visual-studio-2022) `nuitka` 编译 (可选)
+- [uv](https://docs.astral.sh/uv/getting-started/installation/)
+- [VS 2022 Build Tools](https://visualstudio.microsoft.com/zh-hans/downloads/#build-tools-for-visual-studio-2022) `nuitka` 编译需要 _可选_
+- [task](https://taskfile.dev/installation/) 类似 `make` _可选, 但是建议安装_
 
 ## 初始化项目
 
@@ -66,5 +66,15 @@
 }
 ```
 
-3. 运行 `pdm install`
+3. 运行 `uv sync`
+
+## uv 换源
+### 下载 `python`
+1. 设置环境变量: `UV_PYTHON_INSTALL_MIRROR` 为 `https://ghp.ci/https://github.com/indygreg/python-build-standalone/releases/download`
+
+### 下载依赖
+1. 进入 `~\AppData\Roaming\uv` _如果没有这个目录就新建一个_
+2. 新建并打开 `uv.toml` 文件, 内容:
+```toml
+index-url = "https://mirrors.aliyun.com/pypi/simple"
 ```
