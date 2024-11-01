@@ -19,18 +19,18 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pdm-project/setup-pdm@v4
+      - uses: astral-sh/setup-uv@v3
       - uses: arduino/setup-task@v2
 
       - name: 运行测试
-        run: pdm run test
+        run: task test
 
   check:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pdm-project/setup-pdm@v4
+      - uses: astral-sh/setup-uv@v3
       - uses: arduino/setup-task@v2
 
       - name: 运行 ruff
-        run: pdm run check --no-fix --output-format=github
+        run: task check -- --no-fix --output-format=github

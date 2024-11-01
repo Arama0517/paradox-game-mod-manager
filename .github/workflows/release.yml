@@ -11,11 +11,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pdm-project/setup-pdm@v4
+      - uses: astral-sh/setup-uv@v3
       - uses: arduino/setup-task@v2
 
       - name: 构建
-        run: pdm run build
+        run: task build
 
       - name: 上传
         uses: actions/upload-artifact@v4
@@ -29,7 +29,7 @@ jobs:
     needs: windows
     steps:
       - uses: actions/checkout@v4
-      - uses: pdm-project/setup-pdm@v4
+      - uses: astral-sh/setup-uv@v3
       - uses: actions/download-artifact@v4
 
       - name: 压缩
@@ -37,7 +37,7 @@ jobs:
           7z a -tzip "windows-x64.zip" ./windows/hoi4-mods-manager.exe ./README.md ./LICENSE
 
       - name: 获取版本号
-        run: echo "version=$(pdm run tools/get_version.py)" > $GITHUB_ENV
+        run: echo "version=$(uv run tools/get_version.py)" > $GITHUB_ENV
 
       - name: 创建发行版
         uses: softprops/action-gh-release@v2
