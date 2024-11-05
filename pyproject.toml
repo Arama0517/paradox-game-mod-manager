@@ -23,7 +23,7 @@ dev-dependencies = [
 ]
 
 [tool.uv.sources]
-steam = { git = "https://github.com/detiam/steam_websocket.git", rev = "solsticegamestudios_fork" }
+steam = { git = "https://github.com/detiam/steam_websocket.git", rev = "b8239912e6a190f490aede529c08b5049096bdc8" }
 
 [tool.ruff]
 preview = true
