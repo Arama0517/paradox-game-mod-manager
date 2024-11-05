@@ -7,9 +7,9 @@ from prompt_toolkit.shortcuts import (
 from steam.enums import EResult
 from steam.webauth import WebAuth
 
-from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
 from src.settings import save_settings, settings
 from src.steam_clients import client
+from src.utils import PROMPT_TOOLKIT_DIALOG_TITLE
 
 
 def main():

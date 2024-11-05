@@ -1,11 +1,14 @@
 from prompt_toolkit.shortcuts import message_dialog
 from steam import webapi
+from steam.enums import EResult
+from steam.exceptions import SteamError
 
-from src import cdn
-from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
+from src.cdn import (
+    install_workshop_items,
+)
 from src.logger import logger
-from src.path import MODS_DIR_PATH
-from src.settings import save_settings, settings
+from src.settings import settings
+from src.utils import PROMPT_TOOLKIT_DIALOG_TITLE, format_duration
 
 
 def main():
@@ -31,7 +34,6 @@ def main():
             logger.info(f'{item_info["title"]} 需要更新')
             try:
                 need_update_items_id += [item_id]
-                logger.info('获取成功')
             except Exception as e:
                 logger.error(f'获取失败, 错误: {e}')
                 continue
@@ -45,24 +47,17 @@ def main():
         ).run()
         return
 
-    mod_update_durations = 0
-
-    manifests = cdn.get_manifests_for_workshop_item(need_update_items_id)
-    for item_id, result in manifests.items():
-        logger.info(f'开始更新: {result["item_info"]["title"]}')
-        mod_update_duration = cdn.download_manifest(
-            result['manifest'], MODS_DIR_PATH / item_id
-        ).total_seconds()
-        settings['mods'][item_id] = result['item_info']
-        save_settings()
-        mod_update_durations += mod_update_duration
-        logger.info(f'更新成功, 共计用时: {mod_update_duration:.2f}秒')
-
-    message_dialog(
-        PROMPT_TOOLKIT_DIALOG_TITLE,
-        f'更新完成, 共计用时: {mod_update_durations:.2f}秒',
-        '返回',
-    ).run()
+    try:
+        mod_update_durations = install_workshop_items(need_update_items_id)
+        message_dialog(
+            PROMPT_TOOLKIT_DIALOG_TITLE,
+            f'安装完成, 共计用时: {format_duration(mod_update_durations)}',
+            '继续',
+        ).run()
+    except SteamError as e:
+        if e.eresult != EResult.NotLoggedOn:
+            raise e
+        message_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, '没有可用的账号', '返回').run()
 
 
 __all__ = ['main']

@@ -1,7 +1,7 @@
 from prompt_toolkit.shortcuts import input_dialog
 
-from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
 from src.settings import save_settings, settings
+from src.utils import PROMPT_TOOLKIT_DIALOG_TITLE
 from src.validator import IntValidator
 
 _TEXT = """请输入要设置的大小, 单位为字节

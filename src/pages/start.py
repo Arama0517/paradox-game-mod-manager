@@ -3,7 +3,6 @@ import subprocess
 from pathlib import Path
 from re import Pattern
 
-from src.logger import logger
 from src.path import CURRENT_DIR_PATH, MOD_BOOT_FILES_PATH, MODS_DIR_PATH
 
 
@@ -13,46 +12,44 @@ def get_pattern(field: str) -> Pattern[str]:
 
 def main():
     for file in MOD_BOOT_FILES_PATH.iterdir():
-        if file.suffix != '.mod':
+        file: Path
+        if not file.is_file() or file.suffix != '.mod':
             continue
         with file.open('r', encoding='utf-8') as f:
             data = f.read()
-        mod_dir_path = get_pattern('path').search(data)
+        replaced_mod_dir_path_data = get_pattern('path').search(data)
 
-        # 没有找到path字段
-        if not mod_dir_path:
-            logger.info(f'删除无效定位文件: {file}')
+        if not replaced_mod_dir_path_data:
             file.unlink()
             continue
 
-        mod_dir_path = Path(mod_dir_path.group())
-        # mod源目录不存在
-        if not mod_dir_path.exists():
-            logger.info(f'删除无效定位文件: {file}')
+        replaced_mod_dir_path_data = Path(replaced_mod_dir_path_data.group(1))
+        if not replaced_mod_dir_path_data.exists():
             file.unlink()
             continue
 
-    # 生成mod定位文件
     for mod in MODS_DIR_PATH.iterdir():
         mod_boot_file_path = MOD_BOOT_FILES_PATH / f'{mod.name}.mod'
 
-        mod_decsriptor_file_path = Path('$')
+        mod_descriptor_file_path = Path('$')
         for f in mod.iterdir():
             if f.suffix == '.mod':
-                mod_decsriptor_file_path = f
+                mod_descriptor_file_path = f
                 break
 
-        # 没有找到描述文件, 可能不是mod
-        if not mod_decsriptor_file_path.exists():
+        # 没有找到描述文件, 可能不是模组
+        if not mod_descriptor_file_path.exists():
             continue
 
         if not mod_boot_file_path.exists():
             with mod_boot_file_path.open('w', encoding='utf-8') as f:
-                data = mod_decsriptor_file_path.read_text(encoding='utf-8')
-                mod_dir_path = get_pattern('path').sub(f'path="{mod.as_posix()}"', data)
+                data = mod_descriptor_file_path.read_text(encoding='utf-8')
+                replaced_mod_dir_path_data = get_pattern('path').sub(
+                    f'path="{mod.as_posix()}"', data
+                )
                 # 有些模组会在描述文件里自带path, 这里覆盖一下
-                if mod_dir_path != data:
-                    f.write(mod_dir_path)
+                if replaced_mod_dir_path_data != data:
+                    f.write(replaced_mod_dir_path_data)
                 else:
                     # 没有自带的情况
                     f.write(data)

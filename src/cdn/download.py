@@ -19,8 +19,12 @@ from rich.progress import (
 )
 from rich.text import Text
 from steam.client.cdn import CDNDepotFile, CDNDepotManifest
+from steam.enums import EResult
+from steam.exceptions import SteamError
 
-from src.settings import settings
+from src.cdn import get_manifests_for_workshop_item
+from src.path import MODS_DIR_PATH
+from src.settings import save_settings, settings
 
 
 class DownloadSpeedColumn(ProgressColumn):
@@ -68,7 +72,6 @@ async def download_manifest_async(
     files_size = 0
     queue: asyncio.Queue[CDNDepotFile] = asyncio.Queue()
     for cdn_file in manifest.iter_files():
-        cdn_file: CDNDepotFile
         if cdn_file.is_directory:
             continue
         await queue.put(cdn_file)
@@ -118,4 +121,22 @@ def download_manifest(manifest: CDNDepotManifest, download_dir_path: Path) -> ti
     return asyncio.run(download_manifest_async(manifest, download_dir_path))
 
 
-__all__ = ['download_manifest']
+def install_workshop_items(items_id: list[str]) -> float:
+    durations = 0.0
+
+    manifests = get_manifests_for_workshop_item(items_id)
+    if not manifests:
+        raise SteamError('没有可用的账号', EResult.NotLoggedOn)
+
+    for manifest in manifests:
+        item_id = manifest.item_info['publishedfileid']
+        durations += download_manifest(
+            manifest, MODS_DIR_PATH / item_id
+        ).total_seconds()
+        settings['mods'][item_id] = manifest.item_info
+        save_settings()
+
+    return durations
+
+
+__all__ = ['download_manifest', 'install_workshop_items']

@@ -1,7 +1,7 @@
 [project]
-name = "hoi4-mods-manager"
+name = "paradox-game-mod-manager"
 version = "1.3.1"
-description = "钢铁雄心4模组管理器"
+description = "P社游戏模组管理器"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
@@ -23,10 +23,9 @@ dev-dependencies = [
 ]
 
 [tool.uv.sources]
-steam = { git = "https://github.com/solsticegamestudios/steam.git" }
+steam = { git = "https://github.com/detiam/steam_websocket.git", rev = "solsticegamestudios_fork" }
 
 [tool.ruff]
-output-format = "grouped"
 preview = true
 fix = true
 
@@ -47,7 +46,6 @@ script = "tools/lndl_config.py"
 [tool.lndl.nuitka.cli]
 main = "src/main.py"
 output-dir = "build"
-output-filename = "hoi4-mods-manager.exe"
 
 # 编译选项
 clang = true
@@ -57,14 +55,12 @@ onefile = true
 show-memory = false
 show-progress = false
 
-# 版本号 构建时通过 tools/lndl_config.py 自动填充
+# 版本号
 product-version = false
 file-version = false
 
 # 文件信息
-product-name = "hoi4-mods-manager"
 company-name = "Arama"
-file-description = "hoi4 mods manager"
 copyright = "Copyright ©Arama. All rights reserved."
 
 # 依赖

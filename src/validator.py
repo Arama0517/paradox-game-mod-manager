@@ -23,8 +23,6 @@ class SteamIDValidator(Validator):
         )['response']['publishedfiledetails'][0]
         if EResult(item_info['result']) != EResult.OK:
             raise ValidationError(message='请输入一个有效的创意工坊ID')
-        if item_info['consumer_app_id'] != 394360:
-            raise ValidationError(message='暂不支持其他游戏的模组')
 
 
 class CertificatePathValidator(Validator):

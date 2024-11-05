@@ -1,4 +1,4 @@
-# 钢铁雄心 4 模组管理器
+# P社游戏模组管理器
 
 <p style="text-align: left;">
   <a href="LICENSE"><img alt="GitHub License" src="https://img.shields.io/github/license/Arama0517/hoi4-mods-manager"></a>
@@ -9,7 +9,7 @@
 ## 使用方式
 
 1. 从[发行版](../../releases/latest)下载最新版本
-2. 解压到游戏的根目录
+2. 将文件解压到 `dowser.exe` 文件的同一目录内
 3. 运行
 
 ## 常见问题
@@ -38,7 +38,7 @@
   - [x] 模组管理
   - [x] 生成模组定位文件
   - [x] 设置页
-  - [ ] 支持大部分 P 社游戏
+  - [x] 支持大部分 P 社游戏
   - [ ] 弃用官方客户端 (不通过启动 `dowser.exe` 的方式启动客户端, 而是直接运行游戏)
 - [ ] 下载类
   - [x] 弃用 `steamcmd`
@@ -58,15 +58,8 @@
 ## 初始化项目
 
 1. 克隆本项目
-2. 在项目根目录创建一个 `launcher-settings.json`, 内容:
-
-```json
-{
-  "gameId": "hoi4"
-}
-```
-
-3. 运行 `uv sync`
+2. 运行 `uv sync`
+3. 运行 `uv run -m tools.setup_project`
 
 ## uv 换源
 ### 下载 `python`

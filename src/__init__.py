@@ -1,10 +1,8 @@
-def ssl():
+def patch_requests(settings: dict):
     import warnings
 
     import urllib3
     from requests.sessions import Session
-
-    from src.settings import settings
 
     origin = Session.__init__
 
@@ -19,4 +17,12 @@ def ssl():
     Session.__init__ = patched
 
 
-ssl()
+def init():
+    from src.path import initialize_data_dir
+    from src.settings import settings
+
+    patch_requests(settings)
+    initialize_data_dir(settings)
+
+
+init()

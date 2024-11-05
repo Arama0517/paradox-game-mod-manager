@@ -6,8 +6,11 @@ from steam.webauth import WebAuth
 from src.logger import logger
 from src.settings import save_settings, settings
 
+client = SteamClient()
+cdn_client = CDNClient(client)
 
-def login(client: SteamClient):
+
+def login() -> bool:
     for user_name, user_info in settings['users'].items():
         logger.info(f'尝试登录: {user_name}')
         while True:
@@ -21,7 +24,7 @@ def login(client: SteamClient):
                     logger.info('登录成功')
                 case EResult.AccessDenied:
                     try:
-                        logger.warning('持久登录失败, 尝试重新获取token')
+                        logger.warning('持久登录token失效, 尝试重新获取token')
                         webauth = WebAuth()
                         webauth.cli_login(user_name, user_info['password'])
                         settings['users'][user_name]['token'] = webauth.refresh_token
@@ -36,12 +39,7 @@ def login(client: SteamClient):
             break
         if client.logged_on:
             break
+    return client.logged_on
 
-
-client = SteamClient()
-login(client)
-
-cdn_client = CDNClient(client)
-cdn_client.get_content_server()  # 提前获取内容服务器, 省时间
 
 __all__ = ['login', 'client', 'cdn_client']

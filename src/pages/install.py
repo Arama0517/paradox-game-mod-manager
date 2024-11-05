@@ -9,12 +9,13 @@ from prompt_toolkit.shortcuts import (
     yes_no_dialog,
 )
 from steam import webapi
+from steam.enums import EResult
+from steam.exceptions import SteamError
 
-from src import cdn
+from src.cdn import install_workshop_items
 from src.cmd import clear
-from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
-from src.path import MODS_DIR_PATH
-from src.settings import save_settings, settings
+from src.settings import settings
+from src.utils import PROMPT_TOOLKIT_DIALOG_TITLE, format_duration
 from src.validator import SteamIDValidator
 
 
@@ -102,23 +103,17 @@ def main():
                     or []
                 )
 
-        mod_install_durations = 0
-
-        manifests = cdn.get_manifests_for_workshop_item(need_install_items_id)
-
-        for item_id, result in manifests.items():
-            mod_install_duration = (
-                cdn.download_manifest(result['manifest'], MODS_DIR_PATH / item_id)
-            ).total_seconds()
-            settings['mods'][item_id] = result['item_info']
-            save_settings()
-            mod_install_durations += mod_install_duration
-
-        message_dialog(
-            PROMPT_TOOLKIT_DIALOG_TITLE,
-            f'安装完成, 共计用时: {mod_install_durations:.2f}秒',
-            '继续',
-        ).run()
+        try:
+            mod_install_durations = install_workshop_items(need_install_items_id)
+            message_dialog(
+                PROMPT_TOOLKIT_DIALOG_TITLE,
+                f'安装完成, 共计用时: {format_duration(mod_install_durations)}',
+                '继续',
+            ).run()
+        except SteamError as e:
+            if e.eresult != EResult.NotLoggedOn:
+                raise e
+            message_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, '没有可用的账号', '返回').run()
 
 
 __all__ = ['main']

@@ -1,7 +1,6 @@
 import os
 import sys
 import traceback
-import webbrowser
 from pathlib import Path
 
 import requests
@@ -10,20 +9,21 @@ from steam import webapi
 from steam.webauth import WebAuth, WebAuthException
 
 from src.cmd import clear
-from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
-from src.logger import logger
 from src.path import (
     CURRENT_DIR_PATH,
-    DATA_DIR_PATH,
     MOD_BOOT_FILES_PATH,
     MODS_DIR_PATH,
 )
 from src.settings import save_settings, settings
+from src.utils import PROMPT_TOOLKIT_DIALOG_TITLE
 from src.validator import CertificatePathValidator
 
 DEFAULT_USERS = {
-    'thb112259': 'steamok7416',
-    'agt8729': 'Apk66433',
+    'hoi4': {
+        'thb112259': 'steamok7416',
+        'agt8729': 'Apk66433',
+    },
+    'victoria3': {'steamok1090250': 'steamok45678919'},
 }
 
 
@@ -67,11 +67,6 @@ def init_ssl():
 def main():
     clear()
 
-    if settings['gameId'] != 'hoi4':
-        message_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, '目前仅支持钢铁雄心4', '退出').run()
-        sys.exit(1)
-    settings['gameDataPath'] = str(DATA_DIR_PATH)  # 数据目录
-
     # 初始化配置文件
     if (
         'ssl' not in settings
@@ -79,11 +74,14 @@ def main():
         and not Path(settings['ssl']).exists()
     ):
         settings['ssl'] = True
+
     init_ssl()
 
     if 'users' not in settings:
         settings['users'] = {}
-        for user_name, password in DEFAULT_USERS.items():
+        for user_name, password in (
+            DEFAULT_USERS.get(settings['gameId']) or {}
+        ).items():
             webauth = WebAuth()
             try:
                 webauth.login(user_name, password)
@@ -113,6 +111,8 @@ def main():
 
     from src import pages
     from src.steam_clients import client, login
+
+    login()
 
     while True:
         clear()
@@ -147,27 +147,28 @@ def main():
             case 'settings':
                 pages.settings()
             case 'relogin':
-                login(client)
+                login()
             case _:
                 break
 
 
 ERROR_TRACEBACK_FILE_PATH = CURRENT_DIR_PATH / 'error_traceback.txt'
-ERROR_TEXT = f"""发生了一个错误
-请在打开的网页里选择反馈Bug后填写你遇到的问题, 复现的过程和错误跟踪文件中的内容
-错误跟踪文件路径: {ERROR_TRACEBACK_FILE_PATH}"""
 ERROR_ISSUE_URL = 'https://github.com/Arama0517/hoi4-mods-manager/issues/new/choose'
+ERROR_TEXT = f"""发生了一个错误
+请打开链接: <{ERROR_ISSUE_URL}>
+选择反馈Bug后填写你遇到的问题, 复现的过程和错误跟踪文件中的内容
+错误跟踪文件路径: {ERROR_TRACEBACK_FILE_PATH}"""
+
 
 if __name__ == '__main__':
     try:
         main()
-    except (KeyboardInterrupt, EOFError):
+    except KeyboardInterrupt:
         pass
     except Exception as e:
         error_traceback_file_path = CURRENT_DIR_PATH / 'error_traceback.txt'
         with error_traceback_file_path.open('w', encoding='utf-8') as f:
             traceback.print_exception(e, file=f)
-        webbrowser.open(ERROR_ISSUE_URL, autoraise=False)
         message_dialog(
             PROMPT_TOOLKIT_DIALOG_TITLE,
             ERROR_TEXT,
@@ -176,6 +177,4 @@ if __name__ == '__main__':
     finally:
         from src.steam_clients import client
 
-        if client is not None and client.logged_on:
-            logger.info('登出')
-            client.logout()
+        client.logout()

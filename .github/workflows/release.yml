@@ -22,7 +22,7 @@ jobs:
         with:
           name: 'windows'
           path: |
-            build/hoi4-mods-manager.exe
+            build/paradox-game-mod-manager.exe
 
   release:
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
 
       - name: 压缩
         run: |
-          7z a -tzip "windows-x64.zip" ./windows/hoi4-mods-manager.exe ./README.md ./LICENSE
+          7z a -tzip "windows-x64.zip" ./windows/paradox-game-mod-manager.exe ./README.md ./LICENSE
 
       - name: 获取版本号
         run: echo "version=$(uv run tools/get_version.py)" > $GITHUB_ENV

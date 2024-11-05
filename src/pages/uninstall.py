@@ -2,9 +2,9 @@ import shutil
 
 from prompt_toolkit.shortcuts import checkboxlist_dialog, message_dialog
 
-from src.dialog import PROMPT_TOOLKIT_DIALOG_TITLE
 from src.path import MOD_BOOT_FILES_PATH, MODS_DIR_PATH
 from src.settings import save_settings, settings
+from src.utils import PROMPT_TOOLKIT_DIALOG_TITLE
 
 
 def main():
