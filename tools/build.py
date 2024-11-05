@@ -28,14 +28,13 @@ config = {
     'assume-yes-for-download': True,
 }
 
-args = []
+command = ['nuitka'] + sys.argv[1:]
 for k, v in config.items():
-    if isinstance(v, bool):
-        if v:
-            args.append(f'--{k}')
+    if isinstance(v, bool) and v:
+        command.append(f'--{k}')
     elif isinstance(v, str):
-        args.append(f'--{k}={v}')
+        command.append(f'--{k}={v}')
     elif isinstance(v, list):
-        args.append(f'--{k}={",".join(v)}')
+        command.append(f'--{k}={",".join(v)}')
 
-subprocess.check_call(['nuitka'] + args + sys.argv[1:], shell=True)
+subprocess.check_call(command, shell=True)
