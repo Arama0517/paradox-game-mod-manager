@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.12 (hoi4-mods-manager)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (hoi4-mods-manager)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (paradox-game-mod-manager)" project-jdk-type="Python SDK" />
 </project>

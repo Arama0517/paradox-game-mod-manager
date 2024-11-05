@@ -5,7 +5,7 @@ tasks:
     aliases:
       - b
     desc: 构建
-    cmd: uv run -m lndl_nuitka . -y {{ .CLI_ARGS }}
+    cmd: uv run -m tools.build {{ .CLI_ARGS }}
 
   check:
     aliases:

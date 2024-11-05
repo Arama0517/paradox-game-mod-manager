@@ -15,7 +15,6 @@ dependencies = [
 
 [tool.uv]
 dev-dependencies = [
-    "lib-not-dr[nuitka]>=0.4.0",
     "nuitka>=2.4.11",
     "pytest>=8.3.3",
     "ruff>=0.7.2",
@@ -39,31 +38,3 @@ combine-as-imports = true
 quote-style = "single"
 indent-style = "space"
 docstring-code-format = true
-
-[tool.lndl.nuitka]
-script = "tools/lndl_config.py"
-
-[tool.lndl.nuitka.cli]
-main = "src/main.py"
-output-dir = "build"
-
-# 编译选项
-clang = true
-msvc = "latest"
-standalone = true
-onefile = true
-show-memory = false
-show-progress = false
-
-# 版本号
-product-version = false
-file-version = false
-
-# 文件信息
-company-name = "Arama"
-copyright = "Copyright ©Arama. All rights reserved."
-
-# 依赖
-include-package = ["steam"]
-
-assume-yes-for-download = true
