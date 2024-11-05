@@ -9,7 +9,7 @@ dependencies = [
     "beautifulsoup4>=4.12.3",
     "prompt-toolkit>=3.0.48",
     "requests>=2.32.3",
-    "rich>=13.9.3",
+    "rich>=13.9.4",
     "steam[client]",
 ]
 
@@ -18,7 +18,7 @@ dev-dependencies = [
     "lib-not-dr[nuitka]>=0.4.0",
     "nuitka>=2.4.11",
     "pytest>=8.3.3",
-    "ruff>=0.6.9",
+    "ruff>=0.7.2",
     "tomli>=2.0.2",
 ]
 
