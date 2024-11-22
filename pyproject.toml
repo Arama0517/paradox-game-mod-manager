@@ -14,8 +14,8 @@ dependencies = [
     "steam[client]",
 ]
 
-[tool.uv]
-dev-dependencies = [
+[dependency-groups]
+dev = [
     "nuitka>=2.5.1",
     "pytest>=8.3.3",
     "ruff>=0.8.0",
@@ -67,3 +67,4 @@ file-description = "{project.description}"
 # 依赖
 include-package = ['steam.protobufs']
 assume-yes-for-downloads = true
+
