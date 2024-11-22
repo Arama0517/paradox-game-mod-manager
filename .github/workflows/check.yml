@@ -7,12 +7,14 @@ on:
       - "**/*.py"
       - "Taskfile.yml"
       - ".github/workflows/*.yml"
+      - ".github/dependabot.yml"
   pull_request:
     paths:
       - "pyproject.toml"
       - "**/*.py"
       - "Taskfile.yml"
       - ".github/workflows/*.yml"
+      - ".github/dependabot.yml"
   schedule:
     - cron: '37 23 * * 5'
 
@@ -31,7 +33,7 @@ jobs:
       - name: 初始化项目
         run: uv run -m tools.setup_project
 
-      - name: 运行测试
+      - name: 运行 pytest
         run: task test
 
   ruff:

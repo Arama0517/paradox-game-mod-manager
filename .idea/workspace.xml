@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1df60d67-202b-4ce4-ad15-fd1022731afb" name="更改" comment="feat: 正式发布1.0.0" />
+    <list default="true" id="1df60d67-202b-4ce4-ad15-fd1022731afb" name="更改" comment="chore: 去除renovate">
+      <change beforePath="$PROJECT_DIR$/.github/dependabot.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/dependabot.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/check.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/check.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -307,6 +311,7 @@
       <workItem from="1732305987389" duration="11000" />
       <workItem from="1732308851818" duration="1319000" />
       <workItem from="1732310638274" duration="155000" />
+      <workItem from="1732311135330" duration="799000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 去除webapi改为使用更快的MsgProto">
       <option name="closed" value="true" />
@@ -532,7 +537,23 @@
       <option name="project" value="LOCAL" />
       <updated>1732309691013</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="chore: 修改pyproject.toml">
+      <option name="closed" value="true" />
+      <created>1732311204385</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1732311204385</updated>
+    </task>
+    <task id="LOCAL-00030" summary="chore: 去除renovate">
+      <option name="closed" value="true" />
+      <created>1732311326711</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1732311326711</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -572,7 +593,9 @@
     <MESSAGE value="feat: 准备发布1.3.3" />
     <MESSAGE value="chore(ci): 整合到一起" />
     <MESSAGE value="chore(ci): 修改提示" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore(ci): 修改提示" />
+    <MESSAGE value="chore: 修改pyproject.toml" />
+    <MESSAGE value="chore: 去除renovate" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: 去除renovate" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/paradox_game_mod_manager$.coverage" NAME=" 覆盖结果" MODIFIED="1731862277509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
