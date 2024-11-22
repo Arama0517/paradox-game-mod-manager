@@ -1,0 +1,30 @@
+name: 功能请求
+description: 请求添加新的功能或修改一个已存在的功能
+assignees:
+  - Arama0517
+labels: [enhancement, triage]
+body:
+  - type: textarea
+    attributes:
+      label: 你的功能请求是否与某个Bug相关? 如果是, 请描述这个问题
+      description: 简短并清晰的描述这个问题
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 描述这个功能做出的效果
+      description: 简短并清晰的描述你想要这个功能做出的效果
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: 搜索
+      options:
+        - label: 在打开这个 issue 之前, 我搜索过其他的 issue
+          required: true
+  - type: textarea
+    attributes:
+      label: 其他描述
+      description: 你想添加都可以
+    validations:
+      required: false

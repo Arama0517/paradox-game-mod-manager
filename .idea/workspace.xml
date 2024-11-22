@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1df60d67-202b-4ce4-ad15-fd1022731afb" name="更改" comment="feat: 正式发布1.0.0">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Arama0517&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Arama0517/paradox-game-mod-manager.git&quot;,
+    &quot;accountId&quot;: &quot;0104a2a7-c3a9-4f35-9d08-9a31bbe56015&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2oQeDeyYpTBGmyvURGZY8xGIAUV" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python 测试.Python 测试 (test_get_item_children.py 内).executor&quot;: &quot;Run&quot;,
+    &quot;Python 测试.test_get_item_children.test_get_item_children 的 Python 测试.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ROG/sources/repos/paradox-game-mod-manager/.github/workflows&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings custom-start-script="" module-name="paradox-game-mod-manager" is-module-sdk="true">
+        <option name="myCustomStartScript" value="" />
+        <option name="myUseModuleSdk" value="true" />
+        <option name="myModuleName" value="paradox-game-mod-manager" />
+      </console-settings>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.test">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="hoi4-mods-manager" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="paradox-game-mod-manager" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python 测试 (test_get_item_children.py 内)" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="paradox-game-mod-manager" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_get_item_children.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Autodetect">
+      <module name="hoi4-mods-manager" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <module name="hoi4-mods-manager" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test_get_item_children.test_get_item_children 的 Python 测试" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="paradox-game-mod-manager" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_get_item_children.test_get_item_children&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python 测试.test_get_item_children.test_get_item_children 的 Python 测试" />
+        <item itemvalue="Python 测试.Python 测试 (test_get_item_children.py 内)" />
+        <item itemvalue="Python.test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-PY-243.21565.199" />
+        <option value="bundled-python-sdk-cab1f2013843-4ae2d6a61b08-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.21565.199" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="1df60d67-202b-4ce4-ad15-fd1022731afb" name="更改" comment="" />
+      <created>1730806110170</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1730806110170</updated>
+      <workItem from="1730806111728" duration="742000" />
+      <workItem from="1730838399873" duration="38000" />
+      <workItem from="1730846269852" duration="77000" />
+      <workItem from="1730891787681" duration="806000" />
+      <workItem from="1730931599520" duration="1287000" />
+      <workItem from="1730932920750" duration="2020000" />
+      <workItem from="1730935049993" duration="202000" />
+      <workItem from="1730935295594" duration="2133000" />
+      <workItem from="1730970590181" duration="2880000" />
+      <workItem from="1730973861951" duration="2432000" />
+      <workItem from="1730977446003" duration="2919000" />
+      <workItem from="1730980500775" duration="332000" />
+      <workItem from="1730981040913" duration="189000" />
+      <workItem from="1730981832254" duration="853000" />
+      <workItem from="1731020545784" duration="2303000" />
+      <workItem from="1731073357738" duration="4151000" />
+      <workItem from="1731093658245" duration="4868000" />
+      <workItem from="1731189586267" duration="61000" />
+      <workItem from="1731190224014" duration="3000" />
+      <workItem from="1731192687172" duration="4667000" />
+      <workItem from="1731224108542" duration="1344000" />
+      <workItem from="1731227106862" duration="805000" />
+      <workItem from="1731273764036" duration="3770000" />
+      <workItem from="1731384281573" duration="2815000" />
+      <workItem from="1731387185169" duration="3061000" />
+      <workItem from="1731390349261" duration="1307000" />
+      <workItem from="1731391698970" duration="442000" />
+      <workItem from="1731398169666" duration="2376000" />
+      <workItem from="1731405792960" duration="2977000" />
+      <workItem from="1731452409578" duration="2119000" />
+      <workItem from="1731454830834" duration="543000" />
+      <workItem from="1731455529276" duration="9000" />
+      <workItem from="1731455545501" duration="356000" />
+      <workItem from="1731466142902" duration="2517000" />
+      <workItem from="1731472743485" duration="1355000" />
+      <workItem from="1731570421170" duration="17000" />
+      <workItem from="1731652682654" duration="193000" />
+      <workItem from="1731654256142" duration="704000" />
+      <workItem from="1731660330378" duration="2295000" />
+      <workItem from="1731835810380" duration="832000" />
+      <workItem from="1731837561724" duration="6355000" />
+      <workItem from="1731857355925" duration="1784000" />
+      <workItem from="1731859193685" duration="387000" />
+      <workItem from="1731861362814" duration="1515000" />
+      <workItem from="1731862905826" duration="1419000" />
+      <workItem from="1731864382709" duration="1230000" />
+      <workItem from="1731865964231" duration="1278000" />
+      <workItem from="1731868901025" duration="1073000" />
+      <workItem from="1731870467260" duration="62000" />
+      <workItem from="1731872495299" duration="440000" />
+      <workItem from="1731873001485" duration="342000" />
+      <workItem from="1731873654449" duration="324000" />
+      <workItem from="1731915719770" duration="1305000" />
+      <workItem from="1731919761595" duration="2755000" />
+      <workItem from="1731925516322" duration="158000" />
+      <workItem from="1731925994280" duration="1211000" />
+      <workItem from="1731927218793" duration="315000" />
+      <workItem from="1731927581143" duration="293000" />
+      <workItem from="1731927884929" duration="106000" />
+      <workItem from="1731928928103" duration="88000" />
+      <workItem from="1731929116382" duration="961000" />
+      <workItem from="1731930089744" duration="2769000" />
+      <workItem from="1731933253505" duration="416000" />
+      <workItem from="1731933923705" duration="1283000" />
+      <workItem from="1731935446496" duration="10000" />
+      <workItem from="1731972735695" duration="95000" />
+      <workItem from="1731976646467" duration="1913000" />
+      <workItem from="1731978604874" duration="1346000" />
+      <workItem from="1731980019683" duration="46000" />
+      <workItem from="1731980323067" duration="17000" />
+      <workItem from="1731980500630" duration="1270000" />
+      <workItem from="1731982300051" duration="1283000" />
+      <workItem from="1732036443738" duration="736000" />
+      <workItem from="1732040118315" duration="327000" />
+      <workItem from="1732040760876" duration="41000" />
+      <workItem from="1732041902920" duration="311000" />
+      <workItem from="1732042837879" duration="660000" />
+      <workItem from="1732123890254" duration="2822000" />
+      <workItem from="1732126803585" duration="1370000" />
+      <workItem from="1732128243406" duration="86000" />
+      <workItem from="1732130524355" duration="10000" />
+      <workItem from="1732205229344" duration="1178000" />
+      <workItem from="1732206429045" duration="314000" />
+      <workItem from="1732206810999" duration="36000" />
+      <workItem from="1732207156757" duration="10000" />
+      <workItem from="1732207459530" duration="224000" />
+      <workItem from="1732208139654" duration="203000" />
+      <workItem from="1732208638829" duration="414000" />
+      <workItem from="1732209708222" duration="2656000" />
+      <workItem from="1732212754668" duration="4039000" />
+      <workItem from="1732217183488" duration="633000" />
+      <workItem from="1732221383939" duration="75000" />
+      <workItem from="1732299659800" duration="384000" />
+      <workItem from="1732300194104" duration="4187000" />
+      <workItem from="1732305987389" duration="11000" />
+      <workItem from="1732308851818" duration="1319000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat: 去除webapi改为使用更快的MsgProto">
+      <option name="closed" value="true" />
+      <created>1731466249910</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1731466249910</updated>
+    </task>
+    <task id="LOCAL-00002" summary="docs: 修改更新日志">
+      <option name="closed" value="true" />
+      <created>1731466319362</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1731466319362</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix: 修复无法正常安装的问题">
+      <option name="closed" value="true" />
+      <created>1731865596283</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1731865596283</updated>
+    </task>
+    <task id="LOCAL-00004" summary="test: 添加测试">
+      <option name="closed" value="true" />
+      <created>1731865616258</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1731865616258</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: 改为手动设置心跳">
+      <option name="closed" value="true" />
+      <created>1731915902919</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1731915902919</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fix: 修复卸载模组的代码">
+      <option name="closed" value="true" />
+      <created>1731922529796</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1731922529796</updated>
+    </task>
+    <task id="LOCAL-00007" summary="ci: 修改编译流程">
+      <option name="closed" value="true" />
+      <created>1731930487914</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1731930487914</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat: 准备发布1.3.2">
+      <option name="closed" value="true" />
+      <created>1731930635384</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1731930635384</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fix: 修复测试">
+      <option name="closed" value="true" />
+      <created>1731930704936</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1731930704936</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat: 修复loop">
+      <option name="closed" value="true" />
+      <created>1731931048476</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1731931048476</updated>
+    </task>
+    <task id="LOCAL-00011" summary="fix: 修复编译参数">
+      <option name="closed" value="true" />
+      <created>1731931308205</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1731931308205</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fix: 修复环境变量">
+      <option name="closed" value="true" />
+      <created>1731931461036</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1731931461036</updated>
+    </task>
+    <task id="LOCAL-00013" summary="fix: 修复环境变量">
+      <option name="closed" value="true" />
+      <created>1731931729402</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1731931729402</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fix: 修改编译参数">
+      <option name="closed" value="true" />
+      <created>1731932143967</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1731932143967</updated>
+    </task>
+    <task id="LOCAL-00015" summary="fix: 修改编译参数">
+      <option name="closed" value="true" />
+      <created>1731932202024</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1731932202024</updated>
+    </task>
+    <task id="LOCAL-00016" summary="fix: 修改编译参数">
+      <option name="closed" value="true" />
+      <created>1731932265018</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1731932265018</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fix: 修改编译参数">
+      <option name="closed" value="true" />
+      <created>1731933385652</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1731933385652</updated>
+    </task>
+    <task id="LOCAL-00018" summary="fix: 修改编译参数">
+      <option name="closed" value="true" />
+      <created>1731934940756</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1731934940756</updated>
+    </task>
+    <task id="LOCAL-00019" summary="feat: 改到pyproject.toml直接一劳永逸">
+      <option name="closed" value="true" />
+      <created>1731978392983</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1731978392983</updated>
+    </task>
+    <task id="LOCAL-00020" summary="revert: 取消多线程卸载模组">
+      <option name="closed" value="true" />
+      <created>1731979664236</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1731979664236</updated>
+    </task>
+    <task id="LOCAL-00021" summary="fix: 通过修改为gevent来修复心跳问题">
+      <option name="closed" value="true" />
+      <created>1732217545179</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1732217545179</updated>
+    </task>
+    <task id="LOCAL-00022" summary="chore(deps): 修改ruff版本">
+      <option name="closed" value="true" />
+      <created>1732217615954</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1732217615954</updated>
+    </task>
+    <task id="LOCAL-00023" summary="fix: 修复GitHub Actions">
+      <option name="closed" value="true" />
+      <created>1732217684584</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1732217684584</updated>
+    </task>
+    <task id="LOCAL-00024" summary="feat: 修改选择逻辑">
+      <option name="closed" value="true" />
+      <created>1732304119788</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1732304119788</updated>
+    </task>
+    <task id="LOCAL-00025" summary="feat: 准备发布1.3.3">
+      <option name="closed" value="true" />
+      <created>1732308902948</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1732308902948</updated>
+    </task>
+    <task id="LOCAL-00026" summary="chore(ci): 整合到一起">
+      <option name="closed" value="true" />
+      <created>1732309461801</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1732309461801</updated>
+    </task>
+    <task id="LOCAL-00027" summary="chore(ci): 修改提示">
+      <option name="closed" value="true" />
+      <created>1732309569138</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1732309569138</updated>
+    </task>
+    <task id="LOCAL-00028" summary="chore(ci): 修改提示">
+      <option name="closed" value="true" />
+      <created>1732309691013</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1732309691013</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: 去除webapi改为使用更快的MsgProto" />
+    <MESSAGE value="docs: 修改更新日志" />
+    <MESSAGE value="fix: 修复无法正常安装的问题" />
+    <MESSAGE value="test: 添加测试" />
+    <MESSAGE value="feat: 改为手动设置心跳" />
+    <MESSAGE value="fix: 修复卸载模组的代码" />
+    <MESSAGE value="ci: 修改编译流程" />
+    <MESSAGE value="feat: 准备发布1.3.2" />
+    <MESSAGE value="fix: 修复测试" />
+    <MESSAGE value="feat: 修复loop" />
+    <MESSAGE value="fix: 修复编译参数" />
+    <MESSAGE value="fix: 修复环境变量" />
+    <MESSAGE value="fix: 修改编译参数" />
+    <MESSAGE value="feat: 改到pyproject.toml直接一劳永逸" />
+    <MESSAGE value="revert: 取消多线程卸载模组" />
+    <MESSAGE value="fix: 通过修改为gevent来修复心跳问题" />
+    <MESSAGE value="chore(deps): 修改ruff版本" />
+    <MESSAGE value="fix: 修复GitHub Actions" />
+    <MESSAGE value="feat: 修改选择逻辑" />
+    <MESSAGE value="feat: 准备发布1.3.3" />
+    <MESSAGE value="chore(ci): 整合到一起" />
+    <MESSAGE value="chore(ci): 修改提示" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore(ci): 修改提示" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/paradox_game_mod_manager$.coverage" NAME=" 覆盖结果" MODIFIED="1731862277509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/paradox_game_mod_manager$test.coverage" NAME="test 覆盖结果" MODIFIED="1731863459852" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+  </component>
+</project>

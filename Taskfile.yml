@@ -1,0 +1,34 @@
+version: 3
+
+tasks:
+  build:
+    aliases:
+      - b
+    desc: 构建
+    cmd: uv run -m tools.build
+
+  check:
+    aliases:
+      - c
+    desc: 使用 ruff 检查并修复代码
+    cmd: uv run -m ruff check {{ .CLI_ARGS }} .
+
+  format:
+    aliases:
+      - fmt
+      - f
+    desc: 使用 ruff 格式化代码
+    cmd: uv run -m ruff format {{ .CLI_ARGS }} .
+
+  run:
+    aliases:
+      - default # 默认运行
+      - r
+    desc: 运行主程序
+    cmd: uv run -m src.main {{ .CLI_ARGS }}
+
+  test:
+    aliases:
+      - t
+    desc: 运行测试
+    cmd: uv run -m pytest {{ .CLI_ARGS }}

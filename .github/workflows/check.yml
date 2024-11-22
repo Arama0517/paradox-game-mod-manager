@@ -1,0 +1,66 @@
+name: 检查代码
+
+on:
+  push:
+    paths:
+      - "pyproject.toml"
+      - "**/*.py"
+      - "Taskfile.yml"
+      - ".github/workflows/*.yml"
+  pull_request:
+    paths:
+      - "pyproject.toml"
+      - "**/*.py"
+      - "Taskfile.yml"
+      - ".github/workflows/*.yml"
+  schedule:
+    - cron: '37 23 * * 5'
+
+permissions:
+  contents: read
+
+jobs:
+  pytest:
+    name: 运行 pytest
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - uses: arduino/setup-task@v2
+
+      - name: 初始化项目
+        run: uv run -m tools.setup_project
+
+      - name: 运行测试
+        run: task test
+
+  ruff:
+    name: 运行 ruff
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - uses: arduino/setup-task@v2
+
+      - name: 运行 ruff
+        run: task check -- --no-fix --output-format=github
+
+  codeql:
+    name: 运行 CodeQL
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 初始化CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python
+
+      - name: 运行CodeQL
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:python"

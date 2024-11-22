@@ -1,0 +1,52 @@
+name: 创建发行版
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - uses: arduino/setup-task@v2
+
+      - name: 构建
+        run: task build
+
+      - name: 上传
+        uses: actions/upload-artifact@v4
+        with:
+          name: 'windows'
+          path: |
+            build/paradox-game-mod-manager.exe
+
+  release:
+    runs-on: ubuntu-latest
+    needs: windows
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - uses: actions/download-artifact@v4
+
+      - name: 压缩
+        run: |
+          7z a -tzip "windows-x64.zip" ./windows/paradox-game-mod-manager.exe ./README.md ./LICENSE
+
+      - name: 获取版本号
+        run: echo "version=$(uv run -m tools.get_info_for_build | jq -r .project.version)" > $GITHUB_ENV
+
+      - name: 创建发行版
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: CHANGELOG.md
+          prerelease: false
+          draft: false
+          tag_name: v${{ env.version }}
+          files: |
+            *.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,41 @@
+name: 反馈Bug
+description: 提交一个 Bug
+assignees:
+  - Arama0517
+labels: [bug, triage]
+body:
+  - type: textarea
+    attributes:
+      label: 错误跟踪文件
+      description: 位于程序同一目录下 error_traceback.txt 的内容
+      placeholder: 请将文件内的内容复制到这里
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 如何重现?
+      placeholder: 简短并清晰的描述重现此问题的步骤
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: 版本号
+      description: 你运行的是哪个版本?
+      options:
+        - v1.3.0
+        - v1.2.0
+      default: 0
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: 搜索
+      options:
+        - label: 在打开这个 issue 之前, 我搜索过其他的 issue
+          required: true
+  - type: textarea
+    attributes:
+      label: 其他描述
+      description: 你想添加都可以
+    validations:
+      required: false
