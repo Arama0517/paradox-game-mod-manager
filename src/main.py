@@ -150,7 +150,7 @@ def main():
             ]
         options += [(pages.settings, '设置')]
 
-        func: Callable[[], None] = radiolist_dialog(
+        func: Callable[[], None] | None = radiolist_dialog(
             PROMPT_TOOLKIT_DIALOG_TITLE, text, '确定', '退出', options
         ).run()
         if not func:

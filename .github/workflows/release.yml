@@ -32,12 +32,12 @@ jobs:
       - uses: astral-sh/setup-uv@v3
       - uses: actions/download-artifact@v4
 
-      - name: 压缩
-        run: |
-          7z a -tzip "windows-x64.zip" ./windows/paradox-game-mod-manager.exe ./README.md ./LICENSE
-
       - name: 获取版本号
         run: echo "version=$(uv run -m tools.get_info_for_build | jq -r .project.version)" > $GITHUB_ENV
+
+      - name: 压缩
+        run: |
+          7z a -tzip "windows-${{ env.version }}-x64.zip" ./windows/paradox-game-mod-manager.exe ./README.md ./LICENSE
 
       - name: 创建发行版
         uses: softprops/action-gh-release@v2

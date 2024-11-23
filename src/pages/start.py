@@ -1,5 +1,6 @@
 import re
 import subprocess
+import sys
 from pathlib import Path
 from re import Pattern
 
@@ -56,6 +57,7 @@ def main():
                     f.write(f'\npath="{mod.as_posix()}"')
 
     subprocess.check_call(CURRENT_DIR_PATH / 'dowser.exe')
+    sys.exit(0)
 
 
 __all__ = ['main']
