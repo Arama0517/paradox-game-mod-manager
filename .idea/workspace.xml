@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1df60d67-202b-4ce4-ad15-fd1022731afb" name="更改" comment="feat: 修复启动客户端后不会退出的问题">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cdn/download.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cdn/download.py" afterDir="false" />
-    </list>
+    <list default="true" id="1df60d67-202b-4ce4-ad15-fd1022731afb" name="更改" comment="perf: 删除多余参数" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -317,7 +313,7 @@
       <workItem from="1732335452413" duration="15000" />
       <workItem from="1732337988929" duration="202000" />
       <workItem from="1732388725337" duration="221000" />
-      <workItem from="1732389140843" duration="421000" />
+      <workItem from="1732389140843" duration="741000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 去除webapi改为使用更快的MsgProto">
       <option name="closed" value="true" />
@@ -591,7 +587,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732338075058</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="perf: 删除多余参数">
+      <option name="closed" value="true" />
+      <created>1732389854391</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1732389854391</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -609,7 +613,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="test: 添加测试" />
     <MESSAGE value="feat: 改为手动设置心跳" />
     <MESSAGE value="fix: 修复卸载模组的代码" />
     <MESSAGE value="ci: 修改编译流程" />
@@ -634,7 +637,8 @@
     <MESSAGE value="fix: 修复dependabot" />
     <MESSAGE value="feat: 修改CHANGELOG" />
     <MESSAGE value="feat: 修复启动客户端后不会退出的问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 修复启动客户端后不会退出的问题" />
+    <MESSAGE value="perf: 删除多余参数" />
+    <option name="LAST_COMMIT_MESSAGE" value="perf: 删除多余参数" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/paradox_game_mod_manager$.coverage" NAME=" 覆盖结果" MODIFIED="1731862277509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
