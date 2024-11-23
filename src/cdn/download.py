@@ -70,11 +70,10 @@ def worker(
     download_dir_path: Path,
     progress: Progress,
     task_id: TaskID,
-    pool: Pool,
 ):
     while not queue.empty():
         cdn_file: CDNDepotFile = queue.get()
-        with open(download_dir_path / cdn_file.filename, 'wb') as f:
+        with (download_dir_path / cdn_file.filename).open('wb') as f:
             while True:
                 data = cdn_file.read(settings['max_chunk_size'])
                 if not data:
@@ -113,7 +112,7 @@ def download_manifest(
         )
 
         for _ in range(min(settings['max_tasks_num'], queue.qsize())):
-            pool.spawn(worker, queue, download_dir_path, progress, task_id, pool)
+            pool.spawn(worker, queue, download_dir_path, progress, task_id)
         pool.join()
         progress.update(task_id, description=f'下载成功: {manifest.name}')
     return datetime.now() - start_time

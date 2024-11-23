@@ -53,18 +53,19 @@ output-file = '{project.name}.exe'
 clang = true
 msvc = "latest"
 mode = "onefile"
+lto = "yes"
 
 # 文件信息
 company-name = "Arama"
 copyright = "Copyright ©Arama. All rights reserved."
 
 product-version = "{project.version}"
-product-name = '{project.name}'
+product-name = "{project.name}"
 
 file-version = "{project.version}"
 file-description = "{project.description}"
 
 # 依赖
-include-package = ['steam.protobufs']
+include-package = ["steam.protobufs"]
 assume-yes-for-downloads = true
 
