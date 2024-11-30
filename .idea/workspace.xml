@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1df60d67-202b-4ce4-ad15-fd1022731afb" name="更改" comment="perf: 删除多余参数" />
+    <list default="true" id="1df60d67-202b-4ce4-ad15-fd1022731afb" name="更改" comment="docs: 修改链接">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cdn/download.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cdn/download.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/install.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/install.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,6 +24,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -41,27 +47,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python 测试.Python 测试 (test_get_item_children.py 内).executor": "Run",
-    "Python 测试.test_get_item_children.test_get_item_children 的 Python 测试.executor": "Run",
-    "Python.test.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/ROG/sources/repos/paradox-game-mod-manager/.github/workflows",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "com.koxudaxi.ruff.RuffConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python 测试.Python 测试 (test_get_item_children.py 内).executor&quot;: &quot;Run&quot;,
+    &quot;Python 测试.test_get_item_children.test_get_item_children 的 Python 测试.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ROG/sources/repos/paradox-game-mod-manager/.github/workflows&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.koxudaxi.ruff.RuffConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
       <console-settings custom-start-script="" module-name="paradox-game-mod-manager" is-module-sdk="true">
@@ -313,7 +319,14 @@
       <workItem from="1732335452413" duration="15000" />
       <workItem from="1732337988929" duration="202000" />
       <workItem from="1732388725337" duration="221000" />
-      <workItem from="1732389140843" duration="741000" />
+      <workItem from="1732389140843" duration="975000" />
+      <workItem from="1732401073090" duration="223000" />
+      <workItem from="1732402996345" duration="1000" />
+      <workItem from="1732865377376" duration="767000" />
+      <workItem from="1732866423692" duration="1000" />
+      <workItem from="1732866446141" duration="5000" />
+      <workItem from="1732872937263" duration="1016000" />
+      <workItem from="1732970613687" duration="228000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 去除webapi改为使用更快的MsgProto">
       <option name="closed" value="true" />
@@ -595,7 +608,23 @@
       <option name="project" value="LOCAL" />
       <updated>1732389854391</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="docs: 修改链接">
+      <option name="closed" value="true" />
+      <created>1732389930225</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1732389930225</updated>
+    </task>
+    <task id="LOCAL-00037" summary="docs: 修改链接">
+      <option name="closed" value="true" />
+      <created>1732389958864</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1732389958864</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -613,7 +642,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: 改为手动设置心跳" />
     <MESSAGE value="fix: 修复卸载模组的代码" />
     <MESSAGE value="ci: 修改编译流程" />
     <MESSAGE value="feat: 准备发布1.3.2" />
@@ -638,7 +666,8 @@
     <MESSAGE value="feat: 修改CHANGELOG" />
     <MESSAGE value="feat: 修复启动客户端后不会退出的问题" />
     <MESSAGE value="perf: 删除多余参数" />
-    <option name="LAST_COMMIT_MESSAGE" value="perf: 删除多余参数" />
+    <MESSAGE value="docs: 修改链接" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs: 修改链接" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/paradox_game_mod_manager$.coverage" NAME=" 覆盖结果" MODIFIED="1731862277509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />

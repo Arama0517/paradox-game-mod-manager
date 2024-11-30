@@ -17,7 +17,10 @@ from src.validator import SteamIDValidator
 
 
 def get_item_children(item_id: int) -> list[PublishedFileDetails]:
-    def _main(item_info: PublishedFileDetails, result: list):
+    def _main(
+        item_info: PublishedFileDetails,
+        result: list[PublishedFileDetails] = None,
+    ):
         if EResult(item_info.result) != EResult.OK:
             return
 
@@ -52,7 +55,7 @@ def get_item_children(item_id: int) -> list[PublishedFileDetails]:
         ).body.publishedfiledetails[0],
         result,
     )
-    return result
+    return sorted(result, key=lambda p: p.title)
 
 
 def main():

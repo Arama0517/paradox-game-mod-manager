@@ -1,12 +1,7 @@
-from threading import Thread
-from time import sleep
-
 from prompt_toolkit.shortcuts import input_dialog, yes_no_dialog
 from steam.client import SteamClient
 from steam.client.cdn import CDNClient
-from steam.core.msg import MsgProto
 from steam.enums import EResult
-from steam.enums.emsg import EMsg
 from steam.enums.proto import EAuthSessionGuardType
 from steam.webauth import (
     SUPPORTED_AUTH_TYPES,
@@ -179,42 +174,6 @@ def send_login():
         if client.logged_on:
             break
     _running_login = False
-
-
-_heartbeat_loop: Thread | None = None
-_interval = 0
-
-
-def heartbeat():
-    global _interval
-
-    message = MsgProto(EMsg.ClientHeartBeat)
-    time = 0
-    while True:
-        if not client.connected:
-            sleep(0.1)
-            time = 0
-            continue
-        if time < _interval:
-            sleep(0.1)
-            time += 0.1
-            continue
-        client.send(message)
-        time = 0
-
-
-@client.on(EMsg.ClientLogOnResponse)
-def _handle_logon(msg):
-    result = msg.body.eresult
-    if result != EResult.OK:
-        return
-    global _heartbeat_loop, _interval
-
-    if not _heartbeat_loop:
-        _heartbeat_loop = Thread(target=heartbeat, daemon=True)
-        _heartbeat_loop.start()
-
-    _interval = msg.body.heartbeat_seconds
 
 
 @client.on(client.EVENT_DISCONNECTED)

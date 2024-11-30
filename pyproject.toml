@@ -11,7 +11,7 @@ dependencies = [
     "prompt-toolkit>=3.0.48",
     "requests>=2.32.3",
     "rich>=13.9.4",
-    "steam[client]",
+    "steam",
 ]
 
 [dependency-groups]

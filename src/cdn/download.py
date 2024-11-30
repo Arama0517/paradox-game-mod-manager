@@ -17,9 +17,7 @@ from rich.progress import (
 )
 from rich.text import Text
 from steam.client.cdn import CDNDepotFile, CDNDepotManifest
-from steam.protobufs.steammessages_publishedfile_pb2 import (
-    CPublishedFile_GetDetails_Response,
-)
+from steam.protobufs.steammessages_publishedfile_pb2 import PublishedFileDetails
 
 from src.cdn.manifests import get_manifests_for_workshop_item
 from src.path import MODS_DIR_PATH
@@ -34,8 +32,8 @@ class DownloadSpeedColumn(ProgressColumn):
 
         self.message = self.get_message(0)
 
-    @classmethod
-    def get_message(cls, speed: int | float) -> Text:
+    @staticmethod
+    def get_message(speed: int | float) -> Text:
         units = ['B', 'KiB', 'MiB', 'GiB', 'TiB']
         unit_index = 0
         size = speed
@@ -119,7 +117,7 @@ def download_manifest(
 
 
 def install_workshop_items(
-    items_id: list[CPublishedFile_GetDetails_Response],
+    items_id: list[PublishedFileDetails],
 ) -> timedelta:
     durations = timedelta()
 
