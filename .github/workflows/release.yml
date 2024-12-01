@@ -22,7 +22,7 @@ jobs:
         with:
           name: 'windows'
           path: |
-            build/paradox-game-mod-manager.exe
+            dist/paradox-game-mod-manager.exe
 
   release:
     runs-on: ubuntu-latest

@@ -16,7 +16,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "nuitka>=2.5.1",
+    "pyinstaller>=6.11.1",
     "pytest>=8.3.3",
     "ruff>=0.8.0",
     "tomli>=2.1.0",
@@ -44,28 +44,8 @@ quote-style = "single"
 indent-style = "space"
 docstring-code-format = true
 
-[tool.nuitka]
-script-name = 'src/main.py'
-output-dir = 'build'
-output-file = '{project.name}.exe'
-
-# 编译选项
-clang = true
-msvc = "latest"
-mode = "onefile"
-lto = "yes"
-
-# 文件信息
-company-name = "Arama"
-copyright = "Copyright ©Arama. All rights reserved."
-
-product-version = "{project.version}"
-product-name = "{project.name}"
-
-file-version = "{project.version}"
-file-description = "{project.description}"
-
-# 依赖
-include-package = ["steam.protobufs"]
-assume-yes-for-downloads = true
-
+[tool.pyinstaller]
+name = "{project.name}"
+clean = true
+onefile = true
+noconfirm = true

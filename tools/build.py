@@ -1,10 +1,9 @@
-import json
-import os
 import re
-import subprocess
+import sys
 from pathlib import Path
 
 import tomli
+from PyInstaller.__main__ import run
 
 
 def get_nested_value(data, keys):
@@ -31,19 +30,11 @@ def replace_placeholders(template, data):
 with (Path.cwd() / 'pyproject.toml').open('rb') as f:
     data = tomli.load(f)
 
-params = {}
-for key, value in data['tool']['nuitka'].items():
-    result = value
-    if isinstance(value, list):
-        result = '\n'.join(value)
-    elif isinstance(value, dict):
-        result = '\n'.join(f'{k}={v}' for k, v in value.items())
-    elif isinstance(value, bool):
-        result = str(value).lower()
+args = ['src/main.py']
+for key, value in data['tool']['pyinstaller'].items():
+    if value is True:
+        args.append(replace_placeholders(f'--{key}', data))
+    else:
+        args.append(replace_placeholders(f'--{key}={value}', data))
 
-    params[key] = replace_placeholders(result, data)
-
-
-env = os.environ.copy()
-env['NUITKA_WORKFLOW_INPUTS'] = json.dumps(params)
-subprocess.check_call(['nuitka', '--github-workflow-options'], env=env, shell=True)
+run(args + sys.argv[1:])

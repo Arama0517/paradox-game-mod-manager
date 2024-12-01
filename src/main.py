@@ -3,10 +3,6 @@ from gevent.monkey import patch_all
 # 这里的thread不能改成True会导致用户输入的时候心跳被阻塞
 patch_all(thread=False)
 
-from warnings import filterwarnings
-
-filterwarnings('ignore', category=UserWarning)
-
 from src.monkey import patch_all
 
 patch_all()
@@ -17,6 +13,7 @@ import sys
 import traceback
 from pathlib import Path
 from typing import Callable
+from warnings import filterwarnings
 
 from prompt_toolkit.shortcuts import input_dialog, message_dialog, radiolist_dialog
 from steam.webauth import WebAuth, WebAuthException
@@ -81,6 +78,8 @@ def init_ssl():
 
 
 def init():
+    filterwarnings('ignore', category=UserWarning)
+
     # 初始化配置文件
     if (
         'ssl' not in settings

@@ -20,6 +20,8 @@ with LAUNCHER_SETTINGS_FILE_PATH.open('r', encoding='utf-8') as f:
 DATA_DIR_PATH = Path(
     _settings['gameDataPath'].replace('%USER_DOCUMENTS%', documents_path)
 )
+del _settings
+
 MOD_BOOT_FILES_PATH = DATA_DIR_PATH / 'mod'
 MODS_DIR_PATH = CURRENT_DIR_PATH / 'mods'
 

@@ -11,7 +11,7 @@ tasks:
     aliases:
       - b
     desc: 构建
-    cmd: uv run -m tools.build
+    cmd: uv run -m tools.build {{ .CLI_ARGS }}
 
   check:
     aliases:
