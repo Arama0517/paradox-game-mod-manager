@@ -1,6 +1,6 @@
 [project]
 name = "paradox-game-mod-manager"
-version = "1.0.0"
+version = "1.1.0"
 description = "P社游戏模组管理器"
 readme = "README.md"
 requires-python = ">=3.13"
