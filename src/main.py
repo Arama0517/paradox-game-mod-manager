@@ -1,8 +1,7 @@
-from collections.abc import Callable
-
 from gevent.monkey import patch_all
 
-patch_all(thread=False, time=False)
+# 这里的thread不能改成True会导致用户输入的时候心跳被阻塞
+patch_all(thread=False)
 
 from warnings import filterwarnings
 
@@ -17,6 +16,7 @@ import os
 import sys
 import traceback
 from pathlib import Path
+from typing import Callable
 
 from prompt_toolkit.shortcuts import input_dialog, message_dialog, radiolist_dialog
 from steam.webauth import WebAuth, WebAuthException

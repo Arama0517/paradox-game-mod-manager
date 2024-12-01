@@ -1,6 +1,12 @@
 version: 3
 
 tasks:
+  update_dependencies:
+    aliases:
+      - update_deps
+    desc: 更新依赖
+    cmd: uv sync -U
+
   build:
     aliases:
       - b

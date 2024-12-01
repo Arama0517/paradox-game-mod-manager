@@ -166,6 +166,11 @@ def send_login():
                         pass
                     except Exception as e:
                         logger.error(f'登录失败, 错误: [bold red]{e}[/bold red]')
+                case EResult.TryAnotherCM, EResult.ServiceUnavailable:
+                    logger.warning('CM服务器不可用尝试使用其他服务器...')
+                    client.cm_servers.mark_bad(client.current_server_addr)
+                    client.disconnect()
+                    continue
                 case _:
                     logger.error(
                         f'登录失败, 错误: [bold red]{result.name}[/bold red], 错误代码: [bold dim]{result.value}[/bold dim]'  # noqa: E501
