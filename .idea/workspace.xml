@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1df60d67-202b-4ce4-ad15-fd1022731afb" name="更改" comment="docs: 修改链接">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cdn/download.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cdn/download.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/install.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/install.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -327,6 +324,9 @@
       <workItem from="1732866446141" duration="5000" />
       <workItem from="1732872937263" duration="1016000" />
       <workItem from="1732970613687" duration="228000" />
+      <workItem from="1732971941889" duration="26000" />
+      <workItem from="1732972197638" duration="50000" />
+      <workItem from="1732972259869" duration="71000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 去除webapi改为使用更快的MsgProto">
       <option name="closed" value="true" />
