@@ -18,7 +18,7 @@ from src.utils import PROMPT_TOOLKIT_DIALOG_TITLE
 client = SteamClient()
 
 
-def cli_login(
+async def cli_login(
     self: WebAuth,
     user_name: str,
     password: str,
@@ -28,14 +28,14 @@ def cli_login(
     """代替自带的cli_login"""
     while True:
         try:
-            res = self.login(user_name, password, code, email_required)
+            res = await self.login(user_name, password, code, email_required)
         except LoginIncorrect:
-            password = input_dialog(
+            password = await input_dialog(
                 PROMPT_TOOLKIT_DIALOG_TITLE,
                 f'密码错误, 请输入 {user_name} 的密码',
                 '确认',
                 '跳过此账号',
-            ).run()
+            ).run_async()
             continue
         except TwoFactorCodeRequired:
             allowed = set(self.allowed_confirmations)
@@ -54,83 +54,83 @@ def cli_login(
                     text = f'请输入 {user_name} 的邮箱验证码'
                 if can_confirm_with_app:
                     if text == '':
-                        if not yes_no_dialog(
+                        if not await yes_no_dialog(
                             PROMPT_TOOLKIT_DIALOG_TITLE,
                             f'请在 Steam Guard 点击确认后点击此窗口的确认 (用户: {user_name})',  # noqa: E501
                             '确认',
                             '跳过此账号',
-                        ).run():
+                        ).run_async():
                             return None
                     else:
                         text += ' (或者在第三方应用里点击确认后点击此窗口的确认)'
 
                 if text != '':
-                    twofactor_code = input_dialog(
+                    twofactor_code = await input_dialog(
                         PROMPT_TOOLKIT_DIALOG_TITLE, text + ':', '确认', '跳过此账号'
-                    ).run()
+                    ).run_async()
                     if not twofactor_code:
                         return None
 
                 if can_confirm_with_app:
                     try:
-                        self._pollLoginStatus()
+                        await self._pollLoginStatus()
                         break
                     except TwoFactorCodeRequired:
                         pass
 
                 if twofactor_code.strip():
                     using_email_code = EAuthSessionGuardType.EmailCode in allowed
-                    self._update_login_token(
+                    await self._update_login_token(
                         twofactor_code,
                         EAuthSessionGuardType.EmailCode
                         if using_email_code
                         else EAuthSessionGuardType.DeviceCode,
                     )
                     try:
-                        self._pollLoginStatus()
+                        await self._pollLoginStatus()
                         break
                     except TwoFactorCodeRequired:
-                        if not yes_no_dialog(
+                        if not await yes_no_dialog(
                             PROMPT_TOOLKIT_DIALOG_TITLE,
                             '验证码错误, 请重试',
                             '确认',
                             '跳过此账号',
-                        ).run():
+                        ).run_async():
                             return None
                         twofactor_code = ''
                         continue
                 else:
-                    if not yes_no_dialog(
+                    if not await yes_no_dialog(
                         PROMPT_TOOLKIT_DIALOG_TITLE,
                         '身份验证失败, 请重试',
                         '确认',
                         '跳过此账号',
-                    ).run():
+                    ).run_async():
                         return None
-            self._finalizeLogin()
-            return self.session
+            await self._finalizeLogin()
+            return self
 
         if hasattr(res, '__call__'):
             while True:
                 try:
-                    twofactor_code = input_dialog(
+                    twofactor_code = await input_dialog(
                         PROMPT_TOOLKIT_DIALOG_TITLE,
                         f'请输入 {user_name} 的 2FA 或 邮箱验证码',
                         '确认',
                         '跳过此账号',
-                    ).run()
+                    ).run_async()
                     resp = res(twofactor_code)
                     return resp
                 except WebAuthException:
                     pass
         else:
-            return self.session
+            return self
 
 
 _running_login = False
 
 
-def send_login():
+async def send_login():
     global _running_login
     if client.logged_on or _running_login:
         return
@@ -139,7 +139,7 @@ def send_login():
     for username, user_info in settings['users'].items():
         logger.info(f'尝试登录: [bold green]{username}[/bold green]')
         while True:
-            result = client.login(
+            result = await client.login(
                 username, access_token=settings['users'][username]['token']
             )
 
@@ -149,19 +149,21 @@ def send_login():
                 case EResult.AccessDenied:
                     try:
                         logger.warning('持久登录失效, 尝试重新获取Token')
-                        webauth = WebAuth()
-                        if not cli_login(webauth, username, user_info['password']):
-                            break
-                        if username != webauth.username:
-                            del settings['users'][username]
-                        user_info = {
-                            'username': webauth.username,
-                            'password': webauth.password,
-                            'token': webauth.refresh_token,
-                        }
-                        settings['users'][webauth.username] = user_info
-                        save_settings()
-                        continue
+                        async with WebAuth() as webauth:
+                            if not await cli_login(
+                                webauth, username, user_info['password']
+                            ):
+                                break
+                            if username != webauth.username:
+                                del settings['users'][username]
+                            user_info = {
+                                'username': webauth.username,
+                                'password': webauth.password,
+                                'token': webauth.refresh_token,
+                            }
+                            settings['users'][webauth.username] = user_info
+                            save_settings()
+                            continue
                     except KeyboardInterrupt:
                         pass
                     except Exception as e:
@@ -169,7 +171,7 @@ def send_login():
                 case EResult.TryAnotherCM, EResult.ServiceUnavailable:
                     logger.warning('CM服务器不可用尝试使用其他服务器...')
                     client.cm_servers.mark_bad(client.current_server_addr)
-                    client.disconnect()
+                    await client.disconnect()
                     continue
                 case _:
                     logger.error(
@@ -182,8 +184,8 @@ def send_login():
 
 
 @client.on(client.EVENT_DISCONNECTED)
-def _handle_disconnect():
-    client.reconnect(30)
+async def _handle_disconnect():
+    await client.reconnect(30)
 
 
 cdn_client = CDNClient(client)

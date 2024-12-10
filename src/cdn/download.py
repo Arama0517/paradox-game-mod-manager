@@ -1,8 +1,9 @@
+import asyncio
+from asyncio import Queue
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from gevent.pool import Pool
-from gevent.queue import Queue
+import aiofiles
 from rich.console import RenderableType
 from rich.progress import (
     BarColumn,
@@ -63,40 +64,39 @@ class DownloadSpeedColumn(ProgressColumn):
         return self.message
 
 
-def worker(
-    queue: Queue,
+async def worker(
+    queue: Queue[CDNDepotFile],
     download_dir_path: Path,
     progress: Progress,
     task_id: TaskID,
 ):
     while not queue.empty():
-        cdn_file: CDNDepotFile = queue.get()
-        with (download_dir_path / cdn_file.filename).open('wb') as f:
+        cdn_file, data = await queue.get()
+        async with aiofiles.open(download_dir_path / cdn_file.filename, 'wb') as f:
             while True:
-                data = cdn_file.read(settings['max_chunk_size'])
+                data = await cdn_file.read(settings['max_chunk_size'])
                 if not data:
                     break
-                f.write(data)
+                await f.write(data)
                 progress.advance(task_id, len(data))
+        queue.task_done()
 
 
-def download_manifest(
+async def download_manifest(
     manifest: CDNDepotManifest,
     download_dir_path: Path,
 ) -> timedelta:
     files_size = 0
-    pool = Pool(settings['max_tasks_num'])
 
     queue: Queue = Queue()
     for cdn_file in manifest.iter_files():
         if cdn_file.is_directory:
             (download_dir_path / cdn_file.filename).mkdir(parents=True, exist_ok=True)
             continue
-        queue.put(cdn_file)
+        await queue.put(cdn_file)
         files_size += cdn_file.size
 
     start_time: datetime = datetime.now()
-
     with Progress(
         SpinnerColumn(),
         TextColumn('[progress.description]{task.description}', style='bold dim'),
@@ -109,23 +109,27 @@ def download_manifest(
             f'正在下载: {manifest.name} ', total=files_size
         )
 
+        tasks = []
         for _ in range(min(settings['max_tasks_num'], queue.qsize())):
-            pool.spawn(worker, queue, download_dir_path, progress, task_id)
-        pool.join()
+            tasks.append(
+                asyncio.create_task(worker(queue, download_dir_path, progress, task_id))
+            )
+
+        await asyncio.gather(*tasks)
         progress.update(task_id, description=f'下载成功: {manifest.name}')
     return datetime.now() - start_time
 
 
-def install_workshop_items(
+async def install_workshop_items(
     items_id: list[PublishedFileDetails],
 ) -> timedelta:
     durations = timedelta()
 
-    manifests = get_manifests_for_workshop_item(items_id)
+    manifests = await get_manifests_for_workshop_item(items_id)
     for manifest in manifests:
         item_id = str(manifest.item_info.publishedfileid)
 
-        durations += download_manifest(manifest, MODS_DIR_PATH / item_id)
+        durations += await download_manifest(manifest, MODS_DIR_PATH / item_id)
         settings['mods'][item_id] = {
             'title': manifest.item_info.title,
             'time_updated': manifest.item_info.time_updated,

@@ -5,11 +5,10 @@ description = "P社游戏模组管理器"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "asyncio-gevent",
+    "aiofiles>=24.1.0",
     "beautifulsoup4>=4.12.3",
-    "gevent>=24.11.1",
+    "nest-asyncio>=1.6.0",
     "prompt-toolkit>=3.0.48",
-    "requests>=2.32.3",
     "rich>=13.9.4",
     "steam",
 ]
@@ -24,7 +23,7 @@ dev = [
 
 [tool.uv.sources]
 steam = { git = "https://github.com/Arama0517/steam.git" }
-asyncio-gevent = { git = "https://github.com/Arama0517/asyncio-gevent.git" }
+#asyncio-gevent = { git = "https://github.com/Arama0517/asyncio-gevent.git" }
 
 [tool.ruff]
 preview = true

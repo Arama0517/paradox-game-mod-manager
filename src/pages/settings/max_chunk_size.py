@@ -5,15 +5,15 @@ from src.utils import PROMPT_TOOLKIT_DIALOG_TITLE
 from src.validator import IntValidator
 
 
-def main():
-    max_chunk_size = input_dialog(
+async def main():
+    max_chunk_size = await input_dialog(
         PROMPT_TOOLKIT_DIALOG_TITLE,
         '请输入要设置的大小, 单位为字节',
         '确认',
         '返回',
         validator=IntValidator(),
         default=str(settings['max_chunk_size']),
-    ).run()
+    ).run_async()
     if not max_chunk_size:
         return
     settings['max_chunk_size'] = int(max_chunk_size)

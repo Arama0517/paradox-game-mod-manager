@@ -1,21 +1,12 @@
-from gevent.monkey import patch_all
-
-# 这里的thread不能改成True会导致用户输入的时候心跳被阻塞
-patch_all(thread=False)
-
-from src.monkey import patch_all
-
-patch_all()
-
+import asyncio
 import json
 import os
-import sys
 import traceback
-from pathlib import Path
-from typing import Callable
+from typing import Awaitable, Callable
 from warnings import filterwarnings
 
-from prompt_toolkit.shortcuts import input_dialog, message_dialog, radiolist_dialog
+from nest_asyncio import apply
+from prompt_toolkit.shortcuts import message_dialog, radiolist_dialog
 from steam.webauth import WebAuth, WebAuthException
 
 from src.path import (
@@ -26,7 +17,8 @@ from src.path import (
 )
 from src.settings import save_settings, settings
 from src.utils import PROMPT_TOOLKIT_DIALOG_TITLE
-from src.validator import CertificatePathValidator
+
+apply()
 
 DEFAULT_USERS = {
     'hoi4': {
@@ -34,62 +26,14 @@ DEFAULT_USERS = {
         'agt8729': 'Apk66433',
     },
     'victoria3': {'steamok1090250': 'steamok45678919'},
+    'stellaris': {'wbtq1084073': 'steamok010101'},
 }
 
 
-def init_ssl():
-    import requests
-    from steam import webapi
-
-    while True:
-        try:
-            webapi.get('ISteamWebAPIUtil', 'GetServerInfo')
-            break
-        except requests.exceptions.SSLError:
-            ssl = radiolist_dialog(
-                PROMPT_TOOLKIT_DIALOG_TITLE,
-                'SSL错误\n请选择一个选项',
-                '确认',
-                '退出',
-                [
-                    ('retry', '重试'),
-                    ('disable_ssl', '关闭证书认证'),
-                    ('set_local_certificate', '设置本地证书路径'),
-                ],
-            ).run()
-            match ssl:
-                case 'retry':
-                    continue
-                case 'disable_ssl':
-                    settings['ssl'] = False
-                case 'set_local_certificate':
-                    certificate_path = input_dialog(
-                        PROMPT_TOOLKIT_DIALOG_TITLE,
-                        '请输入证书路径',
-                        '确认',
-                        '退出',
-                        validator=CertificatePathValidator(),
-                    ).run()
-                    if not certificate_path:
-                        sys.exit(1)
-                    settings['ssl'] = certificate_path
-                case _:
-                    sys.exit(1)
-
-
-def init():
+async def init():
     filterwarnings('ignore', category=UserWarning)
 
     # 初始化配置文件
-    if (
-        'ssl' not in settings
-        or type(settings['ssl']) is not bool
-        and not Path(settings['ssl']).exists()
-    ):
-        settings['ssl'] = True
-
-    init_ssl()
-
     if 'users' not in settings:
         settings['users'] = {}
         with LAUNCHER_SETTINGS_FILE_PATH.open('r', encoding='utf-8') as f:
@@ -97,18 +41,18 @@ def init():
         for username, password in (
             DEFAULT_USERS.get(launcher_settings['gameId']) or {}
         ).items():
-            webauth = WebAuth()
-            try:
-                webauth.login(username, password)
-            except WebAuthException:
-                continue
-            if not webauth.logged_on:
-                continue
-            settings['users'][username] = {
-                'username': username,
-                'password': password,
-                'token': webauth.refresh_token,
-            }
+            async with WebAuth() as webauth:
+                try:
+                    await webauth.login(username, password)
+                except WebAuthException:
+                    continue
+                if not webauth.logged_on:
+                    continue
+                settings['users'][username] = {
+                    'username': username,
+                    'password': password,
+                    'token': webauth.refresh_token,
+                }
 
     if 'mods' not in settings:
         settings['mods'] = {}
@@ -126,10 +70,10 @@ def init():
 
     from src.steam_clients import send_login
 
-    send_login()
+    await send_login()
 
 
-def main():
+async def main():
     from src import pages
     from src.steam_clients import client, send_login
 
@@ -149,12 +93,12 @@ def main():
             ]
         options += [(pages.settings, '设置')]
 
-        func: Callable[[], None] | None = radiolist_dialog(
+        func: Callable[[], Awaitable[None]] | None = await radiolist_dialog(
             PROMPT_TOOLKIT_DIALOG_TITLE, text, '确定', '退出', options
-        ).run()
+        ).run_async()
         if not func:
             break
-        func()
+        await func()
 
 
 ERROR_TRACEBACK_FILE_PATH = CURRENT_DIR_PATH / 'error_traceback.txt'
@@ -167,8 +111,8 @@ ERROR_TEXT = f"""发生了一个错误
 
 if __name__ == '__main__':
     try:
-        init()
-        main()
+        asyncio.run(init())
+        asyncio.run(main())
     except KeyboardInterrupt:
         pass
     except Exception as e:

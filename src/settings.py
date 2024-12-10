@@ -19,7 +19,6 @@ class Settings(TypedDict):
     max_chunk_size: int
     max_tasks_num: int
     mods: dict[str, Mod]
-    ssl: str | bool
     users: dict[str, User]
 
 

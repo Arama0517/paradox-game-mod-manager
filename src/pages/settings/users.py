@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Awaitable, Callable
 
 from prompt_toolkit.shortcuts import (
     input_dialog,
@@ -14,9 +14,9 @@ from src.steam_clients import cli_login, client, send_login
 from src.utils import PROMPT_TOOLKIT_DIALOG_TITLE
 
 
-def main():
+async def main():
     while True:
-        func: Callable[[], None] = radiolist_dialog(
+        func: Callable[[], Awaitable[None]] = await radiolist_dialog(
             PROMPT_TOOLKIT_DIALOG_TITLE,
             '请选择要执行的操作',
             '确认',
@@ -25,37 +25,41 @@ def main():
                 (add, '添加账号'),
                 (remove, '移除账号'),
             ],
-        ).run()
+        ).run_async()
         if not func:
             return
-        func()
+        await func()
 
 
-def add():
+async def add():
     while True:
-        username = input_dialog(
+        username = await input_dialog(
             PROMPT_TOOLKIT_DIALOG_TITLE, '请输入用户的名字', '确认', '返回'
-        ).run()
+        ).run_async()
         if not username:
             return
         if username in settings['users']:
-            message_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, '用户已存在', '继续').run()
+            await message_dialog(
+                PROMPT_TOOLKIT_DIALOG_TITLE, '用户已存在', '继续'
+            ).run_async()
             continue
-        password = input_dialog(
+        password = await input_dialog(
             PROMPT_TOOLKIT_DIALOG_TITLE,
             '请输入用户的密码',
             '确认',
             '返回',
             password=True,
-        ).run()
+        ).run_async()
         if not password:
             return
 
         webauth = WebAuth()
         try:
-            cli_login(webauth, username, password)
+            await cli_login(webauth, username, password)
         except Exception as e:
-            message_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, f'登录失败\n{e}', '确认').run()
+            await message_dialog(
+                PROMPT_TOOLKIT_DIALOG_TITLE, f'登录失败\n{e}', '确认'
+            ).run_async()
             continue
 
         settings['users'][username] = {
@@ -67,14 +71,17 @@ def add():
 
         if (
             not client.logged_on
-            and client.login(username, access_token=webauth.refresh_token) != EResult.OK
+            and await client.login(username, access_token=webauth.refresh_token)
+            != EResult.OK
         ):
-            client.logout()
-        message_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, '添加成功', '确认').run()
+            await client.logout()
+        await message_dialog(
+            PROMPT_TOOLKIT_DIALOG_TITLE, '添加成功', '确认'
+        ).run_async()
         return
 
 
-def remove():
+async def remove():
     options = []
     for username in settings['users'].keys():
         options += [(username, username)]

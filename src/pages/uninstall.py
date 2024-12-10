@@ -15,19 +15,19 @@ from src.settings import save_settings, settings
 from src.utils import PROMPT_TOOLKIT_DIALOG_TITLE
 
 
-def main():
+async def main():
     options: list[tuple[str, str]] = []
     for item_id, item_info in settings['mods'].items():
         options.append((item_id, item_info['title']))
     if not options:
-        message_dialog(
+        await message_dialog(
             PROMPT_TOOLKIT_DIALOG_TITLE, '你还没有安装任何模组', '返回'
-        ).run()
+        ).run_async()
         return
 
-    items_id = checkboxlist_dialog(
+    items_id = await checkboxlist_dialog(
         PROMPT_TOOLKIT_DIALOG_TITLE, '请选择要卸载的模组', '卸载', '取消', options
-    ).run()
+    ).run_async()
     if not items_id:
         return
 
@@ -53,7 +53,7 @@ def main():
             del settings['mods'][item_id]
             save_settings()
         progress.update(task_id, description='删除成功')
-    message_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, '卸载完成', '返回').run()
+    await message_dialog(PROMPT_TOOLKIT_DIALOG_TITLE, '卸载完成', '返回').run_async()
 
 
 __all__ = ['main']

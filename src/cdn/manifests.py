@@ -1,5 +1,6 @@
-from gevent.pool import Pool
-from gevent.queue import Queue
+import asyncio
+from asyncio import Queue
+
 from rich.progress import (
     BarColumn,
     Progress,
@@ -21,19 +22,19 @@ class CDNWorkshopDepotManifest(CDNDepotManifest):
     item_info: PublishedFileDetails = None
 
 
-def worker(
-    queue: Queue,
+async def worker(
+    queue: Queue[PublishedFileDetails],
     manifests: list[CDNWorkshopDepotManifest],
     progress: Progress,
 ):
     while not queue.empty():
-        item_info: PublishedFileDetails = queue.get()
+        item_info: PublishedFileDetails = await queue.get()
 
         # 获取清单请求吗
         task_id = progress.add_task(f'正在获取清单请求码: {item_info.title}', total=3)
         app_id = depot_id = item_info.consumer_appid
         manifest_gid = item_info.hcontent_file
-        manifest_request_code = cdn_client.get_manifest_request_code(
+        manifest_request_code = await cdn_client.get_manifest_request_code(
             app_id,
             depot_id,
             manifest_gid,
@@ -45,7 +46,7 @@ def worker(
             completed=1,
             description=f'正在获取清单内容: {item_info.title}',
         )
-        resp = cdn_client.cdn_cmd(
+        _, content = await cdn_client.cdn_cmd(
             'depot',
             f'{depot_id}/manifest/{manifest_gid}/5/{manifest_request_code}',
             app_id,
@@ -54,7 +55,7 @@ def worker(
         manifest = CDNWorkshopDepotManifest(
             cdn_client,
             app_id,
-            resp.content,
+            content,
         )
 
         # 解码清单
@@ -63,7 +64,7 @@ def worker(
             completed=2,
             description=f'正在解码清单内的文件名: {item_info.title}',
         )
-        manifest.decrypt_filenames(cdn_client.get_depot_key(app_id, depot_id))
+        manifest.decrypt_filenames(await cdn_client.get_depot_key(app_id, depot_id))
         cdn_client.manifests[(app_id, depot_id, manifest_gid)] = manifest
 
         # 添加信息
@@ -78,16 +79,17 @@ def worker(
         # 添加进去
         manifests.append(manifest)
 
+        queue.task_done()
 
-def get_manifests_for_workshop_item(
+
+async def get_manifests_for_workshop_item(
     items_info: list[PublishedFileDetails],
 ) -> list[CDNWorkshopDepotManifest]:
     manifests = []
     queue: Queue = Queue()
-    pool: Pool = Pool(settings['max_tasks_num'])
 
     for item in items_info:
-        queue.put(item)
+        await queue.put(item)
 
     with Progress(
         SpinnerColumn(),
@@ -96,9 +98,10 @@ def get_manifests_for_workshop_item(
         TaskProgressColumn(),
         TimeRemainingColumn(),
     ) as progress:
+        tasks = []
         for _ in range(min(settings['max_tasks_num'], queue.qsize())):
-            pool.spawn(worker, queue, manifests, progress)
-        pool.join()
+            tasks.append(asyncio.create_task(worker(queue, manifests, progress)))
+        await asyncio.gather(*tasks)
     return manifests
 
 
