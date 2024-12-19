@@ -1,9 +1,14 @@
 import re
 import sys
+from logging import DEBUG, root
 from pathlib import Path
 
 import tomli
 from PyInstaller.__main__ import run
+from rich.logging import RichHandler
+
+root.handlers = [RichHandler(markup=True, rich_tracebacks=True)]
+root.setLevel(DEBUG)
 
 
 def get_nested_value(data, keys):
@@ -40,5 +45,4 @@ for key, value in data['tool']['pyinstaller'].items():
     else:
         args.append(replace_placeholders(f'--{key}={value}', data))
 
-print(args)
 run(args)

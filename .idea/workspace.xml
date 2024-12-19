@@ -4,22 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1df60d67-202b-4ce4-ad15-fd1022731afb" name="更改" comment="feat: 修改为asyncio的版本">
-      <change afterPath="$PROJECT_DIR$/launcher-settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/check.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/check.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="1df60d67-202b-4ce4-ad15-fd1022731afb" name="更改" comment="feat: 支持下载合集">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cdn/download.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cdn/download.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cdn/manifests.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cdn/manifests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/install.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/install.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/uninstall.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/uninstall.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/update.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/update.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tools/build.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/build.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/setup_project.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -394,6 +381,7 @@
       <workItem from="1734296934937" duration="397000" />
       <workItem from="1734298148492" duration="321000" />
       <workItem from="1734607990804" duration="900000" />
+      <workItem from="1734609231382" duration="1042000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 去除webapi改为使用更快的MsgProto">
       <option name="closed" value="true" />
@@ -739,7 +727,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733872073568</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="feat: 支持下载合集">
+      <option name="closed" value="true" />
+      <created>1734609510890</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1734609510890</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -757,7 +753,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: 修复loop" />
     <MESSAGE value="fix: 修复编译参数" />
     <MESSAGE value="fix: 修复环境变量" />
     <MESSAGE value="fix: 修改编译参数" />
@@ -782,7 +777,8 @@
     <MESSAGE value="perf: 添加检查CM相关的代码" />
     <MESSAGE value="feat: 准备发布1.1.0" />
     <MESSAGE value="feat: 修改为asyncio的版本" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 修改为asyncio的版本" />
+    <MESSAGE value="feat: 支持下载合集" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 支持下载合集" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/paradox_game_mod_manager$.coverage" NAME=" 覆盖结果" MODIFIED="1731862277509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
