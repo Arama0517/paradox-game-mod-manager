@@ -71,7 +71,7 @@ async def worker(
     task_id: TaskID,
 ):
     while not queue.empty():
-        cdn_file, data = await queue.get()
+        cdn_file = await queue.get()
         async with aiofiles.open(download_dir_path / cdn_file.filename, 'wb') as f:
             while True:
                 data = await cdn_file.read(settings['max_chunk_size'])

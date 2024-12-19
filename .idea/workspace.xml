@@ -4,27 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1df60d67-202b-4ce4-ad15-fd1022731afb" name="更改" comment="feat: 准备发布1.1.0">
-      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+    <list default="true" id="1df60d67-202b-4ce4-ad15-fd1022731afb" name="更改" comment="feat: 修改为asyncio的版本">
+      <change afterPath="$PROJECT_DIR$/launcher-settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/check.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/check.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cdn/download.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cdn/download.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cdn/manifests.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cdn/manifests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/logger.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/monkey.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/patch.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/install.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/install.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/settings/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/settings/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/settings/certificate.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/settings/max_chunk_size.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/settings/max_chunk_size.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/settings/max_tasks_num.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/settings/max_tasks_num.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/settings/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/settings/users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/start.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/start.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/uninstall.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/uninstall.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/update.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/update.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/steam_clients.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/steam_clients.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/validator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/validator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/build.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/build.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/setup_project.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,28 +58,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python 测试.Python 测试 (test_get_item_children.py 内).executor": "Run",
-    "Python 测试.test_get_item_children.test_get_item_children 的 Python 测试.executor": "Run",
-    "Python.test (1).executor": "Run",
-    "Python.test.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/ROG/sources/repos/paradox-game-mod-manager/.github/workflows",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python 测试.Python 测试 (test_get_item_children.py 内).executor&quot;: &quot;Run&quot;,
+    &quot;Python 测试.test_get_item_children.test_get_item_children 的 Python 测试.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ROG/sources/repos/paradox-game-mod-manager/.github/workflows&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
       <console-settings custom-start-script="" module-name="paradox-game-mod-manager" is-module-sdk="true">
@@ -244,8 +239,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-PY-243.21565.199" />
-        <option value="bundled-python-sdk-cab1f2013843-4ae2d6a61b08-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.21565.199" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-PY-243.22562.180" />
+        <option value="bundled-python-sdk-85c76a3b01b3-9a18a617cbe4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.22562.180" />
       </set>
     </attachedChunks>
   </component>
@@ -391,7 +386,14 @@
       <workItem from="1733813597389" duration="1245000" />
       <workItem from="1733828005967" duration="3055000" />
       <workItem from="1733833683077" duration="21000" />
-      <workItem from="1733868383729" duration="3339000" />
+      <workItem from="1733868383729" duration="4827000" />
+      <workItem from="1733979152525" duration="23000" />
+      <workItem from="1733979204647" duration="19000" />
+      <workItem from="1733979471665" duration="43000" />
+      <workItem from="1734238074847" duration="3676000" />
+      <workItem from="1734296934937" duration="397000" />
+      <workItem from="1734298148492" duration="321000" />
+      <workItem from="1734607990804" duration="900000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 去除webapi改为使用更快的MsgProto">
       <option name="closed" value="true" />
@@ -729,7 +731,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733048767153</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="feat: 修改为asyncio的版本">
+      <option name="closed" value="true" />
+      <created>1733872073568</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1733872073568</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -747,7 +757,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix: 修复测试" />
     <MESSAGE value="feat: 修复loop" />
     <MESSAGE value="fix: 修复编译参数" />
     <MESSAGE value="fix: 修复环境变量" />
@@ -772,7 +781,8 @@
     <MESSAGE value="fix: 修复GH API会超出速率限制的问题" />
     <MESSAGE value="perf: 添加检查CM相关的代码" />
     <MESSAGE value="feat: 准备发布1.1.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 准备发布1.1.0" />
+    <MESSAGE value="feat: 修改为asyncio的版本" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 修改为asyncio的版本" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/paradox_game_mod_manager$.coverage" NAME=" 覆盖结果" MODIFIED="1731862277509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />

@@ -16,7 +16,7 @@ from src.utils import PROMPT_TOOLKIT_DIALOG_TITLE
 
 
 async def main():
-    options: list[tuple[str, str]] = []
+    options = []
     for item_id, item_info in settings['mods'].items():
         options.append((item_id, item_info['title']))
     if not options:

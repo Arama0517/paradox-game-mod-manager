@@ -1,5 +1,7 @@
 from prompt_toolkit.shortcuts import message_dialog
-from steam.protobufs.steammessages_publishedfile_pb2 import PublishedFileDetails
+from steam.protobufs.steammessages_publishedfile_pb2 import (
+    PublishedFileDetails,
+)
 
 from src.cdn import (
     install_workshop_items,

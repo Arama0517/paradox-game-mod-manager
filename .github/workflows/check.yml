@@ -32,9 +32,6 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 初始化项目
-        run: uv run -m tools.setup_project
-
       - name: 运行 pytest
         run: task test
 

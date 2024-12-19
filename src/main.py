@@ -1,5 +1,4 @@
 import asyncio
-import json
 import os
 import traceback
 from typing import Awaitable, Callable
@@ -9,13 +8,14 @@ from nest_asyncio import apply
 from prompt_toolkit.shortcuts import message_dialog, radiolist_dialog
 from steam.webauth import WebAuth, WebAuthException
 
+from src import pages
 from src.path import (
     CURRENT_DIR_PATH,
-    LAUNCHER_SETTINGS_FILE_PATH,
     MOD_BOOT_FILES_PATH,
     MODS_DIR_PATH,
 )
-from src.settings import save_settings, settings
+from src.settings import launcher_settings, save_settings, settings
+from src.steam_clients import client, send_login
 from src.utils import PROMPT_TOOLKIT_DIALOG_TITLE
 
 apply()
@@ -36,8 +36,6 @@ async def init():
     # 初始化配置文件
     if 'users' not in settings:
         settings['users'] = {}
-        with LAUNCHER_SETTINGS_FILE_PATH.open('r', encoding='utf-8') as f:
-            launcher_settings = json.load(f)
         for username, password in (
             DEFAULT_USERS.get(launcher_settings['gameId']) or {}
         ).items():
@@ -68,15 +66,10 @@ async def init():
     MODS_DIR_PATH.mkdir(parents=True, exist_ok=True)
     MOD_BOOT_FILES_PATH.mkdir(parents=True, exist_ok=True)
 
-    from src.steam_clients import send_login
-
     await send_login()
 
 
 async def main():
-    from src import pages
-    from src.steam_clients import client, send_login
-
     while True:
         text = '请选择一个选项'
         options = [

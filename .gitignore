@@ -170,6 +170,5 @@ cython_debug/
 # 自动生成的文件
 /mods/
 /game_data/
-/launcher-settings.json
 /pgmm-settings.json
 /error_traceback.txt

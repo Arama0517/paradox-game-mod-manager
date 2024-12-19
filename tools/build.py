@@ -30,11 +30,15 @@ def replace_placeholders(template, data):
 with (Path.cwd() / 'pyproject.toml').open('rb') as f:
     data = tomli.load(f)
 
-args = ['src/main.py']
+args = ['src/main.py'] + sys.argv[1:]
 for key, value in data['tool']['pyinstaller'].items():
     if value is True:
         args.append(replace_placeholders(f'--{key}', data))
+    elif isinstance(value, list):
+        for v in value:
+            args.append(replace_placeholders(f'--{key}={v}', data))
     else:
         args.append(replace_placeholders(f'--{key}={value}', data))
 
-run(args + sys.argv[1:])
+print(args)
+run(args)

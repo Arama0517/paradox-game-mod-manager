@@ -1,7 +1,7 @@
 import json
 from typing import TypedDict
 
-from src.path import SETTINGS_FILE_PATH
+from src.path import LAUNCHER_SETTINGS_FILE_PATH, SETTINGS_FILE_PATH
 
 
 class Mod(TypedDict):
@@ -30,10 +30,13 @@ if not SETTINGS_FILE_PATH.exists():
 with SETTINGS_FILE_PATH.open('r', encoding='utf-8') as _f:
     settings: Settings = json.load(_f)
 
+with LAUNCHER_SETTINGS_FILE_PATH.open('r', encoding='utf-8') as _f:
+    launcher_settings: dict = json.load(_f)
+
 
 def save_settings():
     with SETTINGS_FILE_PATH.open('w', encoding='utf-8') as _f:
         json.dump(settings, _f, indent=4, ensure_ascii=False, sort_keys=True)
 
 
-__all__ = ['settings', 'save_settings']
+__all__ = ['settings', 'save_settings', 'launcher_settings']
