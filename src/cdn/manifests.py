@@ -36,8 +36,11 @@ async def get_manifests_for_workshop_item(
         for item_info in items_info:
             progress.update(task_id, description=f'正在获取清单: {item_info.title}')
             manifest: CDNWorkshopDepotManifest = (
-                cdn_client.get_manifest_for_workshop_item(item_info.publishedfileid)
+                await cdn_client.get_manifest_for_workshop_item(
+                    item_info.publishedfileid
+                )
             )
+
             manifest.item_info = item_info
             manifests.append(manifest)
             progress.advance(task_id)

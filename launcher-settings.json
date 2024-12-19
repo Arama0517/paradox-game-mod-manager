@@ -1,36 +1,53 @@
 {
-	"gameId": "stellaris",
-	"version": "Vela v3.13.2 (d465)",
-	"rawVersion": "v3.13.2",
-	"distPlatform": "gog",
-	"gameDataPath": "%USER_DOCUMENTS%/Paradox Interactive/Stellaris",
-	"ingameSettingsLayoutPath": "settings-layout.json",
-	"themeFile": "./assets/theme-settings.json",
-	"browserDlcUrl": "https://store.steampowered.com/dlc/281990/Stellaris/",
-	"exePath": "./stellaris.exe",
-	"exeArgs": [ "-gdpr-compliant" ]
-		,"alternativeExecutables": [
-        {
-			"exePath": "./stellaris.exe",
-			"exeArgs": ["-gdpr-compliant", "-nakama"],
-			"label": {
-        	        "de": "Shopübergreifender Mehrspielermodus",
-        	        "en": "Cross-Store Multiplayer",
-        	        "es": "Juego cruzado entre plataformas",
-        	        "fr": "Multijoueur multiplateforme",
-        	        "ja": "クロスストア・マルチプレイヤー",
-        	        "ko": "크로스-스토어 멀티플레이어",
-        	        "pl": "Gra wieloosobowa (wszystkie platformy PC)",
-        	        "pt": "Multijogador entre Lojas",
-        	        "ru": "Кроссплатформенный сетевой режим",
-        	        "tr": "Mağazalar Arası Multiplayer",
-        	        "zh-hans": "跨平台多人联机",
-        	        "zh-hant": "跨平台多人遊戲"
+	"gameId":"hoi4",
+	"displayName":"Hearts of Iron IV",
+	"version":"Kaiser v1.15.0.acbb (79eb)",
+	"rawVersion":"1.15.0",
+	"distPlatform":"gog",
+	"ingameSettingsPath":"pdx_settings.json",
+	"gameDataPath":"C:\\Users\\ROG\\sources\\apps\\Hearts of Iron IV\\Paradox Interactive\\Hearts of Iron IV",
+	"dlcPath":".",
+	"ingameSettingsLayoutPath":"settings-layout.json",
+	"themeFile":"./assets/theme-settings.json",
+	"browserDlcUrl":"https://store.steampowered.com/dlc/394360/Hearts_of_Iron_IV/",
+	"browserModUrl":"",
+	"exePath":"./hoi4.exe",
+	"exeArgs":[
+		"-gdpr-compliant"
+	],
+	"alternativeExecutables":[
+		{
+			"label":{
+				"de":"Spiel im Debug-Modus öffnen",
+				"en":"Open game in Debug Mode",
+				"es":"Abrir juego en modo de depuración",
+				"fr":"Ouvrir le jeu en mode débogage",
+				"ja":"デバッグモードでゲームを開",
+				"ko":"디버그 모드로 게임 열기",
+				"pl":"Uruchom grę w trybie debugowania",
+				"pt":"Abrir jogo em modo debug",
+				"ru":"Запустить игру в режиме разработчика",
+				"zh-hans":"以调试模式打开游戏"
 			},
-			"visibleIn": [
-        	        "GAME_SETTINGS",
-        	        "HOME_PAGE"
-    		]
+			"exePath":"./hoi4.exe",
+			"exeArgs":[
+				"-gdpr-compliant",
+				"-debug_mode"
+			]
 		}
+	],
+	"gameCachePaths":[
+		"buildings_nudger_markers.txt",
+		"cache/",
+		"continue_game.json",
+		"game rules/",
+		"map/",
+		"mod/",
+		"naval_dist.cache",
+		"naval_dist_checksum.cache",
+		"playlists/",
+		"pops_filestorage.index",
+		"pops_filestorage/",
+		"shadercache/"
 	]
-							}
+}
