@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1df60d67-202b-4ce4-ad15-fd1022731afb" name="更改" comment="docs: 修改README" />
+    <list default="true" id="1df60d67-202b-4ce4-ad15-fd1022731afb" name="更改" comment="style: 修改仓库链接">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -380,6 +382,7 @@
       <workItem from="1734607990804" duration="900000" />
       <workItem from="1734609231382" duration="1293000" />
       <workItem from="1734610612480" duration="619000" />
+      <workItem from="1734611381837" duration="722000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 去除webapi改为使用更快的MsgProto">
       <option name="closed" value="true" />
@@ -757,7 +760,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734611172477</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="style: 修改仓库链接">
+      <option name="closed" value="true" />
+      <created>1734611542135</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1734611542135</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -775,7 +786,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: 改到pyproject.toml直接一劳永逸" />
     <MESSAGE value="revert: 取消多线程卸载模组" />
     <MESSAGE value="fix: 通过修改为gevent来修复心跳问题" />
     <MESSAGE value="chore(deps): 修改ruff版本" />
@@ -800,7 +810,8 @@
     <MESSAGE value="feat: 修改构建脚本, 准备发布1.2.0" />
     <MESSAGE value="fix: 修复不能正常下载的问题" />
     <MESSAGE value="docs: 修改README" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs: 修改README" />
+    <MESSAGE value="style: 修改仓库链接" />
+    <option name="LAST_COMMIT_MESSAGE" value="style: 修改仓库链接" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/paradox_game_mod_manager$.coverage" NAME=" 覆盖结果" MODIFIED="1731862277509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
