@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v4
+      - uses: astral-sh/setup-uv@v5
       - uses: arduino/setup-task@v2
 
       - name: 构建
@@ -29,7 +29,7 @@ jobs:
     needs: windows
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v4
+      - uses: astral-sh/setup-uv@v5
       - uses: actions/download-artifact@v4
 
       - name: 获取版本号
