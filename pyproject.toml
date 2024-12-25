@@ -21,7 +21,7 @@ dev = [
 ]
 
 [tool.uv.sources]
-steam = { git = "https://github.com/Arama0517/steam_asyncio.git", rev = "v1.6.2" }
+steam = { git = "https://github.com/Arama0517/steam_asyncio.git", rev = "v1.7.0" }
 
 [tool.ruff]
 preview = true
